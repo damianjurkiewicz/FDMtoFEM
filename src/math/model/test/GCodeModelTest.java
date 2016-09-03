@@ -2,21 +2,22 @@ package math.model.test;
 
 import org.junit.Test;
 
-import math.model.Edge;
-import math.model.Layer;
-import math.model.Model;
-import math.model.Vertex;
+import math.model.GCodeEdge;
+import math.model.GCodeLayer;
+import math.model.GCodeModel;
+import math.model.GCodeVertex;
 
-public class ModelTest {
+
+public class GCodeModelTest {
 
     @Test
     public void test() {
-	Model model = new Model();
-	Vertex vertex1 = new Vertex(0, 0, 0);
-	Vertex vertex2 = new Vertex(0, 0, 0);
-	Edge edge = new Edge(vertex1, vertex2);
+	GCodeModel model = new GCodeModel();
+	GCodeVertex vertex1 = new GCodeVertex(0, 0, 0);
+	GCodeVertex vertex2 = new GCodeVertex(0, 0, 0);
+	GCodeEdge edge = new GCodeEdge(vertex1, vertex2);
 
-	Layer layer = new Layer();
+	GCodeLayer layer = new GCodeLayer();
 	layer.getEdges().add(edge);
 	layer.getVertices().add(vertex1);
 	layer.getVertices().add(vertex2);

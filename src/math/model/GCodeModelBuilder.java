@@ -2,10 +2,10 @@ package math.model;
 
 import math.gcode.GCodeFile;
 
-public class ModelBuilder {
+public class GCodeModelBuilder {
 
-    public Model build(GCodeFile gCodeFile) {
-	Model model = new Model();
+    public GCodeModel build(GCodeFile gCodeFile) {
+	GCodeModel model = new GCodeModel();
 	// funkcje tworzace model z vertexow edge'ow layerow
 	return model;
     }

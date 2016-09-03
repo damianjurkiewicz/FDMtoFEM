@@ -1,6 +1,6 @@
 package math.model;
 
-public class Vertex {
+public class GCodeVertex {
 
 	private double x;
 
@@ -8,7 +8,7 @@ public class Vertex {
 
 	private double z;
 
-	public Vertex(double x, double y, double z) {
+	public GCodeVertex(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;

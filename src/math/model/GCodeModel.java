@@ -3,15 +3,15 @@ package math.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Model {
+public class GCodeModel {
 
-    private List<Layer> layers;
+    private List<GCodeLayer> layers;
 
-    public Model() {
-	this.layers = new ArrayList<Layer>();
+    public GCodeModel() {
+	this.layers = new ArrayList<GCodeLayer>();
     }
 
-    public List<Layer> getLayers() {
+    public List<GCodeLayer> getLayers() {
 	return layers;
     }
 

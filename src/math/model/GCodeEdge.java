@@ -4,15 +4,15 @@ package math.model;
 /**
  * The Class edge.
  */
-public class Edge {
+public class GCodeEdge {
 
 	/** The v1. */
-	private Vertex v1;
+	private GCodeVertex v1;
 
 	/** The v2. */
-	private Vertex v2;
+	private GCodeVertex v2;
 
-	public Edge(Vertex v1, Vertex v2) {
+	public GCodeEdge(GCodeVertex v1, GCodeVertex v2) {
 		this.v1 = v1;
 		this.v2 = v2;
 	}
@@ -22,7 +22,7 @@ public class Edge {
 	 *
 	 * @return the v1
 	 */
-	public Vertex getV1() {
+	public GCodeVertex getV1() {
 		return v1;
 	}
 
@@ -32,7 +32,7 @@ public class Edge {
 	 * @param v1
 	 *            the new v1
 	 */
-	public void setV1(Vertex v1) {
+	public void setV1(GCodeVertex v1) {
 		this.v1 = v1;
 	}
 
@@ -41,7 +41,7 @@ public class Edge {
 	 *
 	 * @return the v2
 	 */
-	public Vertex getV2() {
+	public GCodeVertex getV2() {
 		return v2;
 	}
 
@@ -51,7 +51,7 @@ public class Edge {
 	 * @param v2
 	 *            the new v2
 	 */
-	public void setV2(Vertex v2) {
+	public void setV2(GCodeVertex v2) {
 		this.v2 = v2;
 	}
 

@@ -3,21 +3,21 @@ package math.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Layer {
+public class GCodeLayer {
 
-    private List<Edge> edges;
-    private List<Vertex> vertices;
+    private List<GCodeEdge> edges;
+    private List<GCodeVertex> vertices;
 
-    public Layer() {
-	this.edges = new ArrayList<Edge>();
-	this.vertices = new ArrayList<Vertex>();
+    public GCodeLayer() {
+	this.edges = new ArrayList<GCodeEdge>();
+	this.vertices = new ArrayList<GCodeVertex>();
     }
 
-    public List<Edge> getEdges() {
+    public List<GCodeEdge> getEdges() {
 	return edges;
     }
 
-    public List<Vertex> getVertices() {
+    public List<GCodeVertex> getVertices() {
 	return vertices;
     }
 
