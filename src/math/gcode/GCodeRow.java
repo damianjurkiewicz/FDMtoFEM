@@ -7,13 +7,7 @@ public class GCodeRow {
     private String z;
     private String e;
 
-    public GCodeRow() {
-	this.g = "1";
-	this.x = "0.0";
-	this.y = "0.0";
-	this.z = "0.0";
-	this.e = "0.0";
-    }
+
 
     // konstruktor
     public GCodeRow(String g, String x, String y, String z, String e) {
@@ -67,12 +61,13 @@ public class GCodeRow {
     }
 
     public String toString() {
-	String opis = "";
-	opis = opis + "g: " + this.g;
-	opis = opis + "x: " + this.x;
-	opis = opis + "y: " + this.y;
-	opis = opis + "z: " + this.z;
-	opis = opis + "e: " + this.e;
+	String opis = " ";
+	opis = opis + "G" + this.g;
+	opis = opis + " X: " + this.x;
+	opis = opis + " Y: " + this.y;
+	opis = opis + " Z: " + this.z;
+	opis = opis + " E: " + this.e;
+
 	return opis;
     }
 

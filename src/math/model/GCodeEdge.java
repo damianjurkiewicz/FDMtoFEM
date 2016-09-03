@@ -7,52 +7,42 @@ package math.model;
 public class GCodeEdge {
 
 	/** The v1. */
-	private GCodeVertex v1;
+
+	private GCodeVertex vertex1;
 
 	/** The v2. */
-	private GCodeVertex v2;
+	private GCodeVertex vertex2;
 
-	public GCodeEdge(GCodeVertex v1, GCodeVertex v2) {
-		this.v1 = v1;
-		this.v2 = v2;
+	private GCodeLayer layer;
+
+	protected GCodeEdge(GCodeLayer layer, GCodeVertex vertex1, GCodeVertex vertex2) {
+		this.vertex1 = vertex1;
+		this.vertex2 = vertex2;
+		this.layer = layer;
 	}
 
-	/**
-	 * Gets the v1.
-	 *
-	 * @return the v1
-	 */
-	public GCodeVertex getV1() {
-		return v1;
+	public GCodeEdge() {
+		super();
 	}
 
-	/**
-	 * Sets the v1.
-	 *
-	 * @param v1
-	 *            the new v1
-	 */
-	public void setV1(GCodeVertex v1) {
-		this.v1 = v1;
+	public GCodeVertex getVertex1() {
+		return vertex1;
 	}
 
-	/**
-	 * Gets the v2.
-	 *
-	 * @return the v2
-	 */
-	public GCodeVertex getV2() {
-		return v2;
+	public void setVertex1(GCodeVertex vertex1) {
+		this.vertex1 = vertex1;
 	}
 
-	/**
-	 * Sets the v2.
-	 *
-	 * @param v2
-	 *            the new v2
-	 */
-	public void setV2(GCodeVertex v2) {
-		this.v2 = v2;
+	public GCodeVertex getVertex2() {
+		return vertex2;
+	}
+
+	public void setVertex2(GCodeVertex vertex2) {
+		this.vertex2 = vertex2;
+	}
+
+	public GCodeLayer getLayer() {
+		return layer;
 	}
 
 	// TODO: test
@@ -63,8 +53,9 @@ public class GCodeEdge {
 	 */
 	public double getLength() {
 		double length;
-		length = Math.sqrt(Math.pow(v2.getX() - v1.getX(), 2d) + Math.pow(v2.getY() - v1.getY(), 2d)
-				+ Math.pow(v2.getZ() - v1.getZ(), 2d));
+		length = Math.sqrt(Math.pow(vertex2.getX() - vertex1.getX(), 2d) + Math.pow(vertex2.getY() - vertex1.getY(), 2d)
+				);
+
 		return length;
 	}
 

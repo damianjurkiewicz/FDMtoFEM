@@ -18,4 +18,10 @@ public class GCodeFile {
     public void setRows(List<GCodeRow> rows) {
 	this.rows = rows;
     }
+
+    
+    public String toString(){
+    	return " " + rows.size();
+    }
+
 }

@@ -6,12 +6,18 @@ public class GCodeVertex {
 
 	private double y;
 
-	private double z;
 
-	public GCodeVertex(double x, double y, double z) {
+	
+
+
+
+	private GCodeLayer layer;
+
+	protected GCodeVertex( GCodeLayer layer, double x, double y) {
+		this.layer = layer;
 		this.x = x;
 		this.y = y;
-		this.z = z;
+
 	}
 
 	public double getX() {
@@ -30,13 +36,9 @@ public class GCodeVertex {
 		this.y = y;
 	}
 
-	public double getZ() {
-		return z;
+	public GCodeLayer getLayer() {
+		return layer;
 	}
 
-	// TODO: Test ga³êzi
-	public void setZ(double z) {
-		this.z = z;
-	}
 
 }

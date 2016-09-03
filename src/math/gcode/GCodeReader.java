@@ -7,83 +7,76 @@ import java.io.IOException;
 
 public class GCodeReader {
 
-    public GCodeFile read(String filePath) {
 
-	GCodeFile file = new GCodeFile();
-	String row;
+	public GCodeFile read(String filePath) {
 
-	try {
+		GCodeFile file = new GCodeFile();
+		String row;
 
-	    BufferedReader reader = new BufferedReader(new FileReader(filePath));
+		try {
 
-	    while ((row = reader.readLine()) != null) {
+			BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
-		// System.out.println(row);
+			while ((row = reader.readLine()) != null) {
 
-		String gCode = "";
+				// System.out.println(row);
 
-		if (row.contains(";")) {
-		    String[] rowParts = row.split(";");
-		    gCode = rowParts[0];
-		} else {
-		    gCode = row;
-		}
+				String gCode = "";
 
-		if (!gCode.isEmpty()) {
+				if (row.contains(";")) {
+					String[] rowParts = row.split(";");
+					gCode = rowParts[0];
+				} else {
+					gCode = row;
+				}
 
-		    String[] gCodeParts = gCode.split(" ");
-		    String g = "", x = "", y = "", z = "", e = "";
+				if (!gCode.isEmpty()) {
 
-		    for (int i = 0; i < gCodeParts.length; i++) {
+					String[] gCodeParts = gCode.split(" ");
+					String g = "", x = "", y = "", z = "", e = "";
 
-			switch (gCodeParts[i].toUpperCase().charAt(0)) {
-			case 'G':
-			    g = gCodeParts[i].substring(1);
-			    break;
-			case 'X':
-			    x = gCodeParts[i].substring(1);
-			    break;
-			case 'Y':
-			    y = gCodeParts[i].substring(1);
-			    break;
-			case 'Z':
-			    z = gCodeParts[i].substring(1);
-			    break;
-			case 'E':
-			    e = gCodeParts[i].substring(1);
-			    break;
-			default:
-			    break;
+					for (int i = 0; i < gCodeParts.length; i++) {
+
+						switch (gCodeParts[i].toUpperCase().charAt(0)) {
+						case 'G':
+							g = gCodeParts[i].substring(1);
+							break;
+						case 'X':
+							x = gCodeParts[i].substring(1);
+							
+							break;
+						case 'Y':
+							y = gCodeParts[i].substring(1);
+							break;
+						case 'Z':
+							z = gCodeParts[i].substring(1);
+							break;
+						case 'E':
+							e = gCodeParts[i].substring(1);
+							break;
+						default:
+							break;
+						}
+					}
+
+					GCodeRow gCodeRow = new GCodeRow(g, x, y, z, e);
+					file.getRows().add(gCodeRow);
+					//System.out.println(gCodeRow);
+				}
 			}
-		    }
 
-		    GCodeRow gCodeRow = new GCodeRow(g, x, y, z, e);
-		    // opcjonalnie (przeci¹¿anie konstruktora):
-		    // GCodeRow gCodeRow = new GCodeRow();
-		    // gCodeRow.getG(g); - mo¿na zwrocic wartosc wlasciwosci G
+			reader.close();
 
-		    // gCodeRow.setG(g);
-		    // gCodeRow.setX(x);
-		    // gCodeRow.setY(y);
-		    // gCodeRow.setZ(z);
-		    // gCodeRow.setE(e);
-		    file.getRows().add(gCodeRow);
-		    System.out.println(gCodeRow);
+		} catch (
+
+		FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	    }
 
-	    reader.close();
-
-	} catch (
-
-	FileNotFoundException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+		return file;
 	}
-
-	return file;
-    }
 }
