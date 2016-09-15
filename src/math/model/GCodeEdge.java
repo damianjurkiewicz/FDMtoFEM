@@ -45,6 +45,10 @@ public class GCodeEdge {
 		return layer;
 	}
 
+	public void setLayer(GCodeLayer layer) {
+		this.layer = layer;
+	}
+
 	// TODO: test
 	/**
 	 * Oblicza d³ugoœæ odcinka w przestrzeni
@@ -53,8 +57,8 @@ public class GCodeEdge {
 	 */
 	public double getLength() {
 		double length;
-		length = Math.sqrt(Math.pow(vertex2.getX() - vertex1.getX(), 2d) + Math.pow(vertex2.getY() - vertex1.getY(), 2d)
-				);
+		length = Math
+				.sqrt(Math.pow(vertex2.getX() - vertex1.getX(), 2d) + Math.pow(vertex2.getY() - vertex1.getY(), 2d));
 
 		return length;
 	}

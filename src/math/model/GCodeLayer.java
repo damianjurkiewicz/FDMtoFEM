@@ -5,7 +5,6 @@ import java.util.List;
 
 public class GCodeLayer {
 
-
 	private double z;
 	private GCodeModel model;
 	private List<GCodeEdge> edges;
@@ -26,16 +25,28 @@ public class GCodeLayer {
 		this.z = z;
 	}
 
+	public GCodeModel getModel() {
+		return model;
+	}
+
+	public void setModel(GCodeModel model) {
+		this.model = model;
+	}
+
 	public List<GCodeEdge> getEdges() {
 		return edges;
+	}
+
+	public void setEdges(List<GCodeEdge> edges) {
+		this.edges = edges;
 	}
 
 	public List<GCodeVertex> getVertices() {
 		return vertices;
 	}
 
-	public GCodeModel getModel() {
-		return model;
+	public void setVertices(List<GCodeVertex> vertices) {
+		this.vertices = vertices;
 	}
 
 	public GCodeVertex addVertex(double x, double y) {
@@ -48,9 +59,7 @@ public class GCodeLayer {
 		this.vertices.remove(vertex);
 	}
 
-	
-	
-	public GCodeEdge addEdge(GCodeVertex vertex1, GCodeVertex vertex2){
+	public GCodeEdge addEdge(GCodeVertex vertex1, GCodeVertex vertex2) {
 		GCodeEdge edge = new GCodeEdge(this, vertex1, vertex2);
 		this.edges.add(edge);
 		return edge;
@@ -61,23 +70,9 @@ public class GCodeLayer {
 	}
 
 	public String toString() {
-		String opis = " ";
-		int nrNoda = 1;
-		for (GCodeEdge edge : edges) {
-
-			// rzutowanie z double na Double, by moc skorzystac z toString
-			Double x1 = edge.getVertex1().getX();
-			Double y1 = edge.getVertex1().getY();
-
-			Double x2 = edge.getVertex2().getX();
-			Double y2 = edge.getVertex2().getY();
-
-			opis = "Edge " + edges.size() + " " + "Vertex " + vertices.size() + "\n" + nrNoda++ + " V1 " + x1.toString()
-					+ " " + y1.toString() + " " + "\n" + nrNoda++ + " V2 " + x2.toString() + " " + y2.toString();
-		}
-
+		String opis = "";
+		opis = "" + this.getModel().getLayers().get(0).getZ();
 		return opis;
 	}
 
 }
-

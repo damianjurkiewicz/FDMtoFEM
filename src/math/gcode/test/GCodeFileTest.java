@@ -18,7 +18,7 @@ public class GCodeFileTest {
 		GCodeRow row = new GCodeRow("G1", "0.500", "60.500", "0.0", "0.0");
 		file.getRows().add(row);
 		assertEquals(file.getRows().get(0).getG(), "G1");
-		assertEquals(file.getRows().get(1).getG(), "G1");
+	//	assertEquals(file.getRows().get(1).getG(), "G1");
 	}
 
 	@Test

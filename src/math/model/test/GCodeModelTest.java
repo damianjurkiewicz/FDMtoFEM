@@ -1,30 +1,26 @@
 package math.model.test;
 
-
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-
-import math.model.GCodeEdge;
-import math.model.GCodeLayer;
+import math.gcode.GCodeFile;
+import math.gcode.GCodeReader;
 import math.model.GCodeModel;
-import math.model.GCodeVertex;
+import math.model.GCodeModelBuilder;
+
 
 public class GCodeModelTest {
-
+	
 	@Test
 	public void test() {
 
 		GCodeModel model = new GCodeModel();
-		GCodeLayer layer = model.addLayer(0d);
-		GCodeVertex vertex1 = layer.addVertex(1d, 2d);
-		GCodeVertex vertex2 = layer.addVertex(3d, 4d);
-		GCodeEdge edge = layer.addEdge(vertex1, vertex2);
-
-		assertEquals(1d, model.getLayers().get(0).getVertices().get(0).getX(), 0d);
-
+		GCodeReader reader = new GCodeReader();
+		GCodeFile file = reader.read("C:\\Users\\maddj\\Desktop\\11.txt");
+		GCodeModelBuilder builder = new GCodeModelBuilder();
+		builder.build(file);
+		assertEquals(1.0, model.getLayers().get(0).getZ(), 0d);
 	}
-
+	
 
 }

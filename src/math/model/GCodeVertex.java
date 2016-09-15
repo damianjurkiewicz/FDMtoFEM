@@ -6,14 +6,9 @@ public class GCodeVertex {
 
 	private double y;
 
-
-	
-
-
-
 	private GCodeLayer layer;
 
-	protected GCodeVertex( GCodeLayer layer, double x, double y) {
+	protected GCodeVertex(GCodeLayer layer, double x, double y) {
 		this.layer = layer;
 		this.x = x;
 		this.y = y;
@@ -39,6 +34,11 @@ public class GCodeVertex {
 	public GCodeLayer getLayer() {
 		return layer;
 	}
+
+	public void setLayer(GCodeLayer layer) {
+		this.layer = layer;
+	}
+
 
 
 }
