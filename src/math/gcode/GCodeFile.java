@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GCodeFile {
-    // lista z typem generycznym GCodeRow
+
     private List<GCodeRow> rows;
 
     public GCodeFile() {
@@ -17,11 +17,6 @@ public class GCodeFile {
 
     public void setRows(List<GCodeRow> rows) {
 	this.rows = rows;
-    }
-
-    
-    public String toString(){
-    	return " " + rows.size();
     }
 
 }
