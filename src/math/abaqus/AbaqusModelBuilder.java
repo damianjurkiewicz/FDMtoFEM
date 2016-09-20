@@ -7,7 +7,7 @@ public class AbaqusModelBuilder {
 
     public AbaqusModel build(GCodeModel gCodeModel) {
 
-	double p = 2;
+	double p = 1.5;
 	int i, j;
 
 	AbaqusModel abaqusModel = new AbaqusModel();
@@ -56,7 +56,7 @@ public class AbaqusModelBuilder {
 		    if (y1 - y2 != 0 && x1 - x2 != 0) {
 			a = (y1 - y2) / (x1 - x2);
 			b = y1 - a * x1;
-			x3 = (x2 - x1) / 2;
+			x3 = (x2 + x1) / 2;
 			y3 = a * x3 + b;
 		    }
 
@@ -70,16 +70,16 @@ public class AbaqusModelBuilder {
 		}
 
 		// Odcinek duzo dluzszy niz element
-		if (edgeLength > p) {
+		if (edgeLength > 2 * p) {
 		    int edgeSegments = 0;
 		    double rest = 0;
 
 		    // Odcinek pionowy
 		    if (x1 - x2 == 0) {
 			edgeSegments = (int) (edgeLength / p);
-			rest = (edgeLength % edgeSegments);
+			rest = (edgeLength - p * edgeSegments);
 			x3 = x1;
-			y3 = y1 + p + rest / 2;
+			y3 = y1 + rest / 2;
 
 			AbaqusVertex vertex1 = abaqusModel.addVertex(x1, y1, z);
 			AbaqusVertex vertex2 = abaqusModel.addVertex(x2, y2, z);
@@ -88,7 +88,7 @@ public class AbaqusModelBuilder {
 
 			AbaqusVertex vertex = null;
 			AbaqusVertex vertexNext = null;
-			for (int k = 0; k < edgeSegments - 2; k++) {
+			for (int k = 0; k < edgeSegments; k++) {
 			    vertex = abaqusModel.addVertex(x3, y3, z);
 			    vertexNext = abaqusModel.addVertex(x3, y3 = y3 + p, z);
 			    abaqusModel.addEdge(vertex, vertexNext, gCodeEdge);
@@ -99,8 +99,8 @@ public class AbaqusModelBuilder {
 		    // Odcinek poziomy
 		    if (y1 - y2 == 0) {
 			edgeSegments = (int) (edgeLength / p);
-			rest = (edgeLength % edgeSegments);
-			x3 = x1 + p + rest / 2;
+			rest = (edgeLength - p * edgeSegments);
+			x3 = x1 + rest / 2;
 			y3 = y1;
 
 			AbaqusVertex vertex1 = abaqusModel.addVertex(x1, y1, z);
@@ -110,7 +110,7 @@ public class AbaqusModelBuilder {
 
 			AbaqusVertex vertex = null;
 			AbaqusVertex vertexNext = null;
-			for (int k = 0; k < edgeSegments - 2; k++) {
+			for (int k = 0; k < edgeSegments; k++) {
 			    vertex = abaqusModel.addVertex(x3, y3, z);
 			    x3 = x3 + p;
 			    vertexNext = abaqusModel.addVertex(x3, y3, z);
@@ -126,8 +126,8 @@ public class AbaqusModelBuilder {
 			double b = y1 - a * x1;
 			double pX = ((x2 - x1) / edgeLength) * p;
 			edgeSegments = (int) ((x2 - x1) / pX);
-			rest = ((x2 - x1) % edgeSegments);
-			x3 = x1 + pX + rest / 2;
+			rest = (x2 - x1) - pX * edgeSegments;
+			x3 = x1 + rest / 2;
 			y3 = a * x3 + b;
 			AbaqusVertex vertex1 = abaqusModel.addVertex(x1, y1, z);
 			AbaqusVertex vertex3 = abaqusModel.addVertex(x3, y3, z);
@@ -135,7 +135,7 @@ public class AbaqusModelBuilder {
 
 			AbaqusVertex vertex = null;
 			AbaqusVertex vertexNext = null;
-			for (int k = 0; k < edgeSegments - 2; k++) {
+			for (int k = 0; k < edgeSegments; k++) {
 
 			    vertex = abaqusModel.addVertex(x3, y3, z);
 			    x3 = x3 + pX;

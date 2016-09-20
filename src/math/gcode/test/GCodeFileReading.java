@@ -10,7 +10,7 @@ import org.junit.Test;
 import math.gcode.GCodeFile;
 import math.gcode.GCodeReader;
 
-public class GCodeFileTest {
+public class GCodeFileReading {
 
     @Test
     public void fileReadingTest() {
