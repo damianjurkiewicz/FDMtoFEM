@@ -6,26 +6,16 @@ public class GCodeModelBuilder {
 
     public GCodeModel build(GCodeFile gCodeFile) {
 
-	Double x1D = 0d;
-	Double y1D = 0d;
-	Double x2D = 0d;
-	Double y2D = 0d;
-	Double zD = 0d;
-	GCodeVertex vertex = null;
+	GCodeVertex vertex1 = null;
 	GCodeVertex vertex2 = null;
 	GCodeLayer layer = null;
-	GCodeEdge edge = null;
 	GCodeModel model = new GCodeModel();
 
-	for (int i = 0; i < 13; i++) {
+	for (int i = 0; i < gCodeFile.getRows().size(); i++) {
 
-	    String z = gCodeFile.getRows().get(i).getZ();
-
-	    if (z.contains(".")) {
-		zD = Double.parseDouble(gCodeFile.getRows().get(i).getZ());
-		layer = new GCodeLayer(model, zD);
-		model.getLayers().add(layer);
-
+	    if (gCodeFile.getRows().get(i).getZ().contains(".")) {
+		Double z = Double.parseDouble(gCodeFile.getRows().get(i).getZ());
+		layer = model.addLayer(z);
 	    }
 
 	    // x nie pusty, y nie pusty, z pusty, e nie pusty, poprzedni Z
@@ -35,26 +25,19 @@ public class GCodeModelBuilder {
 		    && gCodeFile.getRows().get(i - 1).getZ().isEmpty()
 		    && !gCodeFile.getRows().get(i - 1).getX().isEmpty()) {
 
-		x1D = Double.parseDouble(gCodeFile.getRows().get(i - 1).getX());
-		y1D = Double.parseDouble(gCodeFile.getRows().get(i - 1).getY());
-		x2D = Double.parseDouble(gCodeFile.getRows().get(i).getX());
-		y2D = Double.parseDouble(gCodeFile.getRows().get(i).getY());
+		Double x1 = Double.parseDouble(gCodeFile.getRows().get(i - 1).getX());
+		Double y1 = Double.parseDouble(gCodeFile.getRows().get(i - 1).getY());
+		Double x2 = Double.parseDouble(gCodeFile.getRows().get(i).getX());
+		Double y2 = Double.parseDouble(gCodeFile.getRows().get(i).getY());
 
-		vertex = new GCodeVertex(layer, x1D, y1D);
-		vertex2 = new GCodeVertex(layer, x2D, y2D);
+		vertex1 = layer.addVertex(x1, y1);
+		vertex2 = layer.addVertex(x2, y2);
 
-		layer.getVertices().add(vertex);
-		layer.getVertices().add(vertex2);
-
-		edge = new GCodeEdge(layer, vertex, vertex2);
-		layer.getEdges().add(edge);
-
+		layer.addEdge(vertex1, vertex2);
 	    }
-
 	}
 
 	return model;
 
     }
-
 }

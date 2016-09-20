@@ -12,10 +12,6 @@ public class GCodeEdge {
 	this.layer = layer;
     }
 
-    public GCodeEdge() {
-	super();
-    }
-
     public GCodeVertex getVertex1() {
 	return vertex1;
     }
