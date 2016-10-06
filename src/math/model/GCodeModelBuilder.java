@@ -4,52 +4,71 @@ import math.gcode.GCodeFile;
 
 public class GCodeModelBuilder {
 
-    public GCodeModel build(GCodeFile gCodeFile) {
+	// Metoda majaca za zadanie utworzyc odpowienia strukture, warstw (layer),
+	// odcinkow (edge), punktow (vertex)
+	// Struktura ta odpowiada wyrobowi drukowanemu, skadajacego sie z warstw i
+	// nitek (odcinkow, edge'ow), nitka ma punkt poczatkowy i koncowy, zawarty w
+	// GCodzie
+	public GCodeModel build(GCodeFile gCodeFile) {
 
-	GCodeVertex vertex1 = null;
-	GCodeVertex vertex2 = null;
-	GCodeLayer gCodeLayer = null;
-	GCodeModel gCodeModel = new GCodeModel();
+		GCodeVertex vertex1 = null;
+		GCodeVertex vertex2 = null;
+		GCodeLayer gCodeLayer = null;
+		GCodeModel gCodeModel = new GCodeModel();
 
-	for (int i = 0; i < gCodeFile.getRows().size(); i++) {
+		// Przeszukanie calego gCodeFile, linijka po linijce
+		for (int i = 0; i < gCodeFile.getRows().size(); i++) {
 
-	    if (gCodeFile.getRows().get(i).getZ().contains(".")) {
-		Double z = Double.parseDouble(gCodeFile.getRows().get(i).getZ());
-		gCodeLayer = gCodeModel.addLayer(z);
-	    }
+			// Jesli napotka Z ustawi nowa warstwe, String przy Z (w naszym
+			// przypadku liczba) musi miec kropke, eliminuje to problem
+			// wczytywania wartosci rychow pomocniczych, ktore wedlug pliku
+			// GCode ze Slic3ra nie zawieraja kropki, mozna pomyslec o lepszym
+			// zabezpieczeniu
+			if (gCodeFile.getRows().get(i).getZ().contains(".")) {
+				Double z = Double.parseDouble(gCodeFile.getRows().get(i).getZ());
+				gCodeLayer = gCodeModel.addLayer(z);
+			}
 
-	    // X niepusty, Y niepusty, Z pusty, E niepusty,
+			// Wczytanie linijki w ktorej:
+			// X niepusty, Y niepusty, E niepusty,
+			// Wystepowanie tych wsporzednych gwarantuje, ze nastapil
+			// rzeczywiscie wydruk, a nie ruch pomocniczy
 
-	    if (!gCodeFile.getRows().get(i).getX().isEmpty() && !gCodeFile.getRows().get(i).getY().isEmpty()
-		    && !gCodeFile.getRows().get(i).getE().isEmpty()) {
-		// poprzedni linijka wstecz X niepusty, weŸ wartoœci z linijki
-		// wstecz
-		Double x1 = 0d, x2 = 0d, y1 = 0d, y2 = 0d;
-		x2 = Double.parseDouble(gCodeFile.getRows().get(i).getX());
-		y2 = Double.parseDouble(gCodeFile.getRows().get(i).getY());
+			if (!gCodeFile.getRows().get(i).getX().isEmpty() && !gCodeFile.getRows().get(i).getY().isEmpty()
+					&& !gCodeFile.getRows().get(i).getE().isEmpty()) {
 
-		int k = 0;
-		do {
-		    k++;
+				// Linijka zawierajaca X, Y, E daje wspolrzedne dla drugiego
+				// vertexa (x2, y2), z tego wzledu, ze przed taka linijka moze
+				// wystpic ruch pomocniczy
+				Double x1 = 0d, x2 = 0d, y1 = 0d, y2 = 0d;
+				x2 = Double.parseDouble(gCodeFile.getRows().get(i).getX());
+				y2 = Double.parseDouble(gCodeFile.getRows().get(i).getY());
 
-		    if (!gCodeFile.getRows().get(i - k).getX().isEmpty()) {
-			x1 = Double.parseDouble(gCodeFile.getRows().get(i - k).getX());
-			y1 = Double.parseDouble(gCodeFile.getRows().get(i - k).getY());
-		    }
+				// Przeszukiwanie wstecz, by znalezc ostatnia linijke ze
+				// wspolrzednymi, ktora byla ruchem pomocniczym, ale to w tym
+				// miejscu rozpoczyna sie wydruk nitki
+				int k = 0;
+				do {
+					k++;
 
-		} while (gCodeFile.getRows().get(i - k).getX().isEmpty());
+					if (!gCodeFile.getRows().get(i - k).getX().isEmpty()) {
+						x1 = Double.parseDouble(gCodeFile.getRows().get(i - k).getX());
+						y1 = Double.parseDouble(gCodeFile.getRows().get(i - k).getY());
+					}
 
-		// poprzedni linijka wstecz X pusty, weŸ wartoœci z linijki dwie
-		// linijki wstecz
+				} while (gCodeFile.getRows().get(i - k).getX().isEmpty());
 
-		vertex1 = gCodeLayer.addVertex(x1, y1);
-		vertex2 = gCodeLayer.addVertex(x2, y2);
+				// Po znalezieniu wspolrzednych X Y nastepuje utworzenie
+				// vertexow i stworzenia edga z ich wykorzystaniem
+				vertex1 = gCodeLayer.addVertex(x1, y1);
+				vertex2 = gCodeLayer.addVertex(x2, y2);
 
-		gCodeLayer.addEdge(vertex1, vertex2);
-	    }
+				gCodeLayer.addEdge(vertex1, vertex2);
+
+			}
+		}
+
+		return gCodeModel;
+
 	}
-
-	return gCodeModel;
-
-    }
 }

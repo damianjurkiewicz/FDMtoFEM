@@ -17,7 +17,7 @@ public class AbaqusModelBuilderTest {
     public void abaqusModelBuilderTest() {
 	GCodeModelBuilder gCodeBuilder = new GCodeModelBuilder();
 	GCodeReader reader = new GCodeReader();
-	GCodeFile file = reader.read("C:\\Users\\Damian\\Desktop\\AbaqusBuilderTest.txt");
+	GCodeFile file = reader.read("C:\\Users\\maddj\\Desktop\\AbaqusBuilderTest.txt");
 	GCodeModel gCodeModel = gCodeBuilder.build(file);
 	AbaqusModelBuilder abaqusBuilder = new AbaqusModelBuilder();
 	AbaqusModel abaqusModel = abaqusBuilder.build(gCodeModel);

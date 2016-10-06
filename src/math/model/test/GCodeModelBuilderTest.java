@@ -16,7 +16,7 @@ public class GCodeModelBuilderTest {
 
 	GCodeModelBuilder gCodeBuilder = new GCodeModelBuilder();
 	GCodeReader reader = new GCodeReader();
-	GCodeFile file = reader.read("C:\\Users\\Damian\\Desktop\\AbaqusBuilderTest.txt");
+	GCodeFile file = reader.read("C:\\Users\\maddj\\Desktop\\AbaqusBuilderTest.txt");
 	GCodeModel gCodeModel = gCodeBuilder.build(file);
 	assertEquals(10, gCodeModel.getLayers().get(0).getVertices().get(0).getX(), 0d);
     }

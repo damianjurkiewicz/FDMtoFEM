@@ -1,42 +1,36 @@
 package math.abaqus;
 
-import math.model.GCodeEdge;
-
 public class AbaqusEdge {
 
-    private AbaqusVertex vertex1;
-    private AbaqusVertex vertex2;
-    private GCodeEdge gCodeEdge;
+	private AbaqusVertex vertex1;
+	private AbaqusVertex vertex2;
+	private AbaqusModel model;
 
-    public AbaqusEdge(AbaqusVertex vertex1, AbaqusVertex vertex2, GCodeEdge gCodeEdge) {
-	super();
-	this.vertex1 = vertex1;
-	this.vertex2 = vertex2;
-	this.gCodeEdge = gCodeEdge;
-    }
+	public AbaqusEdge(AbaqusModel model, AbaqusVertex vertex1, AbaqusVertex vertex2) {
+		super();
+		this.vertex1 = vertex1;
+		this.vertex2 = vertex2;
+		this.model = model;
+	}
 
-    public AbaqusVertex getVertex1() {
-	return vertex1;
-    }
+	public AbaqusModel getModel() {
+		return model;
+	}
 
-    public void setVertex1(AbaqusVertex vertex1) {
-	this.vertex1 = vertex1;
-    }
+	public AbaqusVertex getVertex1() {
+		return vertex1;
+	}
 
-    public AbaqusVertex getVertex2() {
-	return vertex2;
-    }
+	public void setVertex1(AbaqusVertex vertex1) {
+		this.vertex1 = vertex1;
+	}
 
-    public void setVertex2(AbaqusVertex vertex2) {
-	this.vertex2 = vertex2;
-    }
+	public AbaqusVertex getVertex2() {
+		return vertex2;
+	}
 
-    public GCodeEdge getgCodeEdge() {
-	return gCodeEdge;
-    }
-
-    public void setgCodeEdge(GCodeEdge gCodeEdge) {
-	this.gCodeEdge = gCodeEdge;
-    }
+	public void setVertex2(AbaqusVertex vertex2) {
+		this.vertex2 = vertex2;
+	}
 
 }
