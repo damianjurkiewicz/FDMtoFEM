@@ -4,151 +4,125 @@ import equations.Equations;
 import math.model.GCodeEdge;
 import math.model.GCodeModel;
 
+// Code Tells You How, Comments Tell You Why
 public class AbaqusModelBuilder {
 
-    public AbaqusModel build(GCodeModel gCodeModel) {
-	// Code Tells You How, Comments Tell You Why
-	double p = 1.5;
-	int i, j;
+    public AbaqusModel fragmentEdges(GCodeModel gCodeModel) {
+	int layerNumber, edgeNumber;
+	double elementSize = 1.5;
+	double x1, y1, x2, y2, nextX = 0, nextY = 0;
+	double z;
+	GCodeEdge gCodeEdge = null;
+	double edgeLength;
+	double linearFunctionSlope;
+	double linearFunctionParam;
+	int wholeSegmentsNumber = 0;
+	double edgeLeftovers = 0;
 
 	AbaqusModel abaqusModel = new AbaqusModel();
 
-	for (i = 0; i < gCodeModel.getLayers().size(); i++) {
+	for (layerNumber = 0; layerNumber < gCodeModel.getLayers().size(); layerNumber++) {
 
-	    for (j = 0; j < gCodeModel.getLayers().get(i).getEdges().size(); j++) {
+	    for (edgeNumber = 0; edgeNumber < gCodeModel.getLayers().get(layerNumber).getEdges().size(); edgeNumber++) {
 
-		GCodeEdge gCodeEdge = gCodeModel.getLayers().get(i).getEdges().get(j);
-		double x1 = gCodeEdge.getVertex1().getX();
-		double y1 = gCodeEdge.getVertex1().getY();
-		double x2 = gCodeEdge.getVertex2().getX();
-		double y2 = gCodeEdge.getVertex2().getY();
-		double x3 = 0;
-		double y3 = 0;
-		double z = gCodeEdge.getLayer().getZ();
-		double edgeLength = gCodeModel.getLayers().get(i).getEdges().get(j).getLength();
+		gCodeEdge = gCodeModel.getLayers().get(layerNumber).getEdges().get(edgeNumber);
 
-		// Odcinek krotszy niz wielkosc elemenetu
-		if (edgeLength <= p) {
+		x1 = gCodeEdge.getVertex1().getX();
+		y1 = gCodeEdge.getVertex1().getY();
+		x2 = gCodeEdge.getVertex2().getX();
+		y2 = gCodeEdge.getVertex2().getY();
+		z = gCodeEdge.getLayer().getZ();
 
-		    AbaqusVertex vertex1 = abaqusModel.addVertex(x1, y1, z);
-		    AbaqusVertex vertex2 = abaqusModel.addVertex(x2, y2, z);
-		    abaqusModel.addEdge(vertex1, vertex2, gCodeEdge);
+		edgeLength = Equations.computeEdgeLength(x1, x2, y1, y2);
+
+		if (Equations.edgeIsShort(edgeLength, elementSize)) {
+		    abaqusModel.addVertex(x1, y1, z);
+		    abaqusModel.addVertex(x2, y2, z);
+		}
+
+		if (Equations.edgeIsMediumLong(edgeLength, elementSize)) {
+
+		    if (Equations.edgeIsVertical(x1, x2)) {
+			nextX = x1;
+			nextY = (y1 + y2) / 2; // for medium long edge, edge is
+					       // divide in half
+		    }
+
+		    if (Equations.edgeIsHorizontal(y1, y2)) {
+			nextY = y1;
+			nextX = (x1 + x2) / 2; // for medium long edge, edge is
+					       // divide in half
+		    }
+
+		    if (Equations.edgeIsSlanted(x1, x2, y1, y2)) {
+			linearFunctionSlope = Equations.computeSlope(x1, x2, y1, y2);
+			linearFunctionParam = Equations.computeParam(x1, y1, linearFunctionSlope);
+			nextX = (x2 + x1) / 2;
+			nextY = linearFunctionSlope * nextX + linearFunctionParam;
+		    }
+
+		    abaqusModel.addVertex(x1, y1, z);
+		    abaqusModel.addVertex(nextX, nextY, z);
+		    abaqusModel.addVertex(x2, y2, z);
 
 		}
 
-		// Polowa odcinka krotsza ni¿ element, ale caly odcinek
-		// dluzszy niz element
-		if (edgeLength / 2 < p && edgeLength > p) {
-		    double a;
-		    double b;
-		    // Odcinek pionowy
-		    if (x1 - x2 == 0) {
-			x3 = x1;
-			y3 = (y1 + y2) / 2;
-		    }
+		if (Equations.edgeIsLong(edgeLength, elementSize)) {
 
-		    // Odcinek poziomy
-		    if (y1 - y2 == 0) {
-			y3 = y1;
-			x3 = (x1 + x2) / 2;
-		    }
+		    if (Equations.edgeIsVertical(x1, x2)) {
+			wholeSegmentsNumber = (int) (edgeLength / elementSize);
+			edgeLeftovers = (edgeLength - elementSize * wholeSegmentsNumber);
+			nextX = x1;
+			nextY = y1 + edgeLeftovers / 2;
 
-		    // Odcinek ukoœny
-		    if (y1 - y2 != 0 && x1 - x2 != 0) {
-			a = (y1 - y2) / (x1 - x2);
-			b = y1 - a * x1;
-			x3 = (x2 + x1) / 2;
-			y3 = a * x3 + b;
-		    }
+			abaqusModel.addVertex(x1, y1, z);
 
-		    AbaqusVertex vertex1 = abaqusModel.addVertex(x1, y1, z);
-		    AbaqusVertex vertex2 = abaqusModel.addVertex(x2, y2, z);
-		    AbaqusVertex vertex3 = abaqusModel.addVertex(x3, y3, z);
-		    // tworza sie dwa odcinki
-		    abaqusModel.addEdge(vertex1, vertex3, gCodeEdge);
-		    abaqusModel.addEdge(vertex3, vertex2, gCodeEdge);
+			abaqusModel.addVertex(nextX, nextY, z);
 
-		}
-
-		// Odcinek duzo dluzszy niz element
-		if (edgeLength > 2 * p) {
-		    int edgeSegments = 0;
-		    double rest = 0;
-
-		    // Odcinek pionowy
-		    if (x1 - x2 == 0) {
-			edgeSegments = (int) (edgeLength / p);
-			rest = (edgeLength - p * edgeSegments);
-			x3 = x1;
-			y3 = y1 + rest / 2;
-
-			AbaqusVertex vertex1 = abaqusModel.addVertex(x1, y1, z);
-			AbaqusVertex vertex2 = abaqusModel.addVertex(x2, y2, z);
-			AbaqusVertex vertex3 = abaqusModel.addVertex(x3, y3, z);
-			abaqusModel.addEdge(vertex1, vertex3, gCodeEdge);
-
-			AbaqusVertex vertex = null;
-			AbaqusVertex vertexNext = null;
-			for (int k = 0; k < edgeSegments; k++) {
-			    vertex = abaqusModel.addVertex(x3, y3, z);
-			    vertexNext = abaqusModel.addVertex(x3, y3 = y3 + p, z);
-			    abaqusModel.addEdge(vertex, vertexNext, gCodeEdge);
+			for (int segmentNumber = 0; segmentNumber < wholeSegmentsNumber; segmentNumber++) {
+			    nextY = nextY + elementSize;
+			    abaqusModel.addVertex(nextX, nextY, z);
 			}
-			abaqusModel.addEdge(vertexNext, vertex2, gCodeEdge);
+
+			abaqusModel.addVertex(x2, y2, z);
 		    }
 
-		    // Odcinek poziomy
-		    if (y1 - y2 == 0) {
-			edgeSegments = (int) (edgeLength / p);
-			rest = (edgeLength - p * edgeSegments);
-			x3 = x1 + rest / 2;
-			y3 = y1;
+		    if (Equations.edgeIsHorizontal(y1, y2)) {
+			wholeSegmentsNumber = (int) (edgeLength / elementSize);
+			edgeLeftovers = (edgeLength - elementSize * wholeSegmentsNumber);
+			nextX = x1 + edgeLeftovers / 2;
+			nextY = y1;
 
-			AbaqusVertex vertex1 = abaqusModel.addVertex(x1, y1, z);
-			AbaqusVertex vertex2 = abaqusModel.addVertex(x2, y2, z);
-			AbaqusVertex vertex3 = abaqusModel.addVertex(x3, y3, z);
-			abaqusModel.addEdge(vertex1, vertex3, gCodeEdge);
+			abaqusModel.addVertex(x1, y1, z);
+			abaqusModel.addVertex(x1 + (edgeLeftovers / 2), y1, z);
 
-			AbaqusVertex vertex = null;
-			AbaqusVertex vertexNext = null;
-
-			for (int k = 0; k < edgeSegments; k++) {
-			    vertex = abaqusModel.addVertex(x3, y3, z);
-			    x3 = x3 + p;
-			    vertexNext = abaqusModel.addVertex(x3, y3, z);
-			    abaqusModel.addEdge(vertex, vertexNext, gCodeEdge);
+			for (int k = 0; k < wholeSegmentsNumber; k++) {
+			    abaqusModel.addVertex(nextX = nextX + elementSize, nextY, z);
 			}
-			abaqusModel.addEdge(vertexNext, vertex2, gCodeEdge);
+			abaqusModel.addVertex(x2, y2, z);
 
 		    }
 
-		    // Odcinek ukoœny
-		    if (y1 - y2 != 0 && x1 - x2 != 0) {
-			double a = Equations.obliczWspolKierProst(x1, x2, y1, y2);
-			// double a = (y1 - y2) / (x1 - x2);
+		    if (Equations.edgeIsSlanted(x1, x2, y1, y2)) {
+			double a = (y1 - y2) / (x1 - x2);
 			double b = y1 - a * x1;
-			double pX = ((x2 - x1) / edgeLength) * p;
-			edgeSegments = (int) ((x2 - x1) / pX);
-			rest = (x2 - x1) - pX * edgeSegments;
-			x3 = x1 + rest / 2;
-			y3 = a * x3 + b;
-			AbaqusVertex vertex1 = abaqusModel.addVertex(x1, y1, z);
-			AbaqusVertex vertex3 = abaqusModel.addVertex(x3, y3, z);
-			abaqusModel.addEdge(vertex1, vertex3, gCodeEdge);
+			double pX = ((x2 - x1) / edgeLength) * elementSize;
+			wholeSegmentsNumber = (int) ((x2 - x1) / pX);
+			edgeLeftovers = (x2 - x1) - pX * wholeSegmentsNumber;
 
-			AbaqusVertex vertex = null;
-			AbaqusVertex vertexNext = null;
-			for (int k = 0; k < edgeSegments; k++) {
+			nextX = x1 + edgeLeftovers / 2;
+			nextY = a * nextX + b;
 
-			    vertex = abaqusModel.addVertex(x3, y3, z);
-			    x3 = x3 + pX;
-			    y3 = a * x3 + b;
-			    vertexNext = abaqusModel.addVertex(x3, y3, z);
-			    abaqusModel.addEdge(vertex, vertexNext, gCodeEdge);
+			abaqusModel.addVertex(x1, y1, z);
+			abaqusModel.addVertex(nextX, nextY, z);
+
+			for (int k = 0; k < wholeSegmentsNumber; k++) {
+			    abaqusModel.addVertex(nextX = nextX + pX, nextY = a * nextX + b, z);
+
 			}
 
-			AbaqusVertex vertex2 = abaqusModel.addVertex(x2, y2, z);
-			abaqusModel.addEdge(vertexNext, vertex2, gCodeEdge);
+			abaqusModel.addVertex(x2, y2, z);
+
 		    }
 
 		}
