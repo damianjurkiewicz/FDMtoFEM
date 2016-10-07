@@ -1,12 +1,13 @@
 package math.abaqus;
 
+import equations.Equations;
 import math.model.GCodeEdge;
 import math.model.GCodeModel;
 
 public class AbaqusModelBuilder {
 
     public AbaqusModel build(GCodeModel gCodeModel) {
-
+	// Code Tells You How, Comments Tell You Why
 	double p = 1.5;
 	int i, j;
 
@@ -110,6 +111,7 @@ public class AbaqusModelBuilder {
 
 			AbaqusVertex vertex = null;
 			AbaqusVertex vertexNext = null;
+
 			for (int k = 0; k < edgeSegments; k++) {
 			    vertex = abaqusModel.addVertex(x3, y3, z);
 			    x3 = x3 + p;
@@ -122,7 +124,8 @@ public class AbaqusModelBuilder {
 
 		    // Odcinek ukoœny
 		    if (y1 - y2 != 0 && x1 - x2 != 0) {
-			double a = (y1 - y2) / (x1 - x2);
+			double a = Equations.obliczWspolKierProst(x1, x2, y1, y2);
+			// double a = (y1 - y2) / (x1 - x2);
 			double b = y1 - a * x1;
 			double pX = ((x2 - x1) / edgeLength) * p;
 			edgeSegments = (int) ((x2 - x1) / pX);
@@ -155,5 +158,18 @@ public class AbaqusModelBuilder {
 
 	return abaqusModel;
     }
+
+    /**
+     * @param wspolrzedna
+     *            x poczatku edge'a
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return
+     */
+    // private double obliczWspolKierProstej(double x1, double y1, double x2,
+    // double y2) {
+    // return (y1 - y2) / (x1 - x2);
+    // }
 
 }
