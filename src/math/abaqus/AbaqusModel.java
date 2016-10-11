@@ -3,8 +3,6 @@ package math.abaqus;
 import java.util.ArrayList;
 import java.util.List;
 
-import math.model.GCodeEdge;
-
 public class AbaqusModel {
 
     private List<AbaqusVertex> vertices;
@@ -42,14 +40,20 @@ public class AbaqusModel {
 	this.vertices.remove(vertex);
     }
 
-    public AbaqusEdge addEdge(AbaqusVertex vertex1, AbaqusVertex vertex2, GCodeEdge gCodeEdge) {
-	AbaqusEdge edge = new AbaqusEdge(vertex1, vertex2, gCodeEdge);
+    public AbaqusEdge addEdge(AbaqusVertex vertex1, AbaqusVertex vertex2) {
+	AbaqusEdge edge = new AbaqusEdge(vertex1, vertex2);
 	this.edges.add(edge);
 	return edge;
     }
 
     public void removeEdge(AbaqusEdge edge) {
 	this.edges.remove(edge);
+    }
+
+    public String toString() {
+	Double x = this.getVertices().get(0).getX();
+	return x.toString();
+
     }
 
 }

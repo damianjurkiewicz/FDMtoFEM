@@ -1,18 +1,14 @@
 package math.abaqus;
 
-import math.model.GCodeEdge;
-
 public class AbaqusEdge {
 
     private AbaqusVertex vertex1;
     private AbaqusVertex vertex2;
-    private GCodeEdge gCodeEdge;
 
-    public AbaqusEdge(AbaqusVertex vertex1, AbaqusVertex vertex2, GCodeEdge gCodeEdge) {
+    public AbaqusEdge(AbaqusVertex vertex1, AbaqusVertex vertex2) {
 	super();
 	this.vertex1 = vertex1;
 	this.vertex2 = vertex2;
-	this.gCodeEdge = gCodeEdge;
     }
 
     public AbaqusVertex getVertex1() {
@@ -29,14 +25,6 @@ public class AbaqusEdge {
 
     public void setVertex2(AbaqusVertex vertex2) {
 	this.vertex2 = vertex2;
-    }
-
-    public GCodeEdge getgCodeEdge() {
-	return gCodeEdge;
-    }
-
-    public void setgCodeEdge(GCodeEdge gCodeEdge) {
-	this.gCodeEdge = gCodeEdge;
     }
 
 }
