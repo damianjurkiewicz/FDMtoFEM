@@ -12,17 +12,18 @@ import math.model.GCodeVertex;
 
 public class AbaqusModelBuilderTest {
 
-    AbaqusModelBuilder abaqusBuilder = new AbaqusModelBuilder();
+    AbaqusModelBuilder abaqusBuilder = new AbaqusModelBuilder(1.5);
     GCodeModelBuilder gCodeBuilder = new GCodeModelBuilder();
     GCodeModel gCodeModel = new GCodeModel();
 
     @Test
-    public void krotszyOdP() {
+    public void krotki() {
 
 	GCodeVertex vertex1 = gCodeModel.addLayer(1).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(1).addVertex(11, 11);
 	gCodeModel.addLayer(1.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = abaqusBuilder.generateVertices(gCodeModel);
+	AbaqusModel abaqusModel = new AbaqusModel();
+	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
 	assertEquals(10, abaqusModel.getVertices().get(0).getY(), 0.0001);
@@ -33,11 +34,12 @@ public class AbaqusModelBuilderTest {
     }
 
     @Test
-    public void dluzszyOdPKrotszyOd2PPionowy() {
+    public void sredniPionowy() {
 	GCodeVertex vertex1 = gCodeModel.addLayer(2).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(2).addVertex(10, 12);
 	gCodeModel.addLayer(2.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = abaqusBuilder.generateVertices(gCodeModel);
+	AbaqusModel abaqusModel = new AbaqusModel();
+	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
 	assertEquals(10, abaqusModel.getVertices().get(0).getY(), 0.0001);
@@ -51,11 +53,12 @@ public class AbaqusModelBuilderTest {
     }
 
     @Test
-    public void dluzszyOdPKrotszyOd2PPoziomy() {
+    public void sredniPoziomy() {
 	GCodeVertex vertex1 = gCodeModel.addLayer(2).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(2).addVertex(12, 10);
 	gCodeModel.addLayer(3.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = abaqusBuilder.generateVertices(gCodeModel);
+	AbaqusModel abaqusModel = new AbaqusModel();
+	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
 	assertEquals(10, abaqusModel.getVertices().get(0).getY(), 0.0001);
@@ -69,11 +72,12 @@ public class AbaqusModelBuilderTest {
     }
 
     @Test
-    public void dluzszyOdPKrotszyOd2PSkosny() {
+    public void sredniSkosny() {
 	GCodeVertex vertex1 = gCodeModel.addLayer(4.0).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(4.0).addVertex(12, 12);
 	gCodeModel.addLayer(4.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = abaqusBuilder.generateVertices(gCodeModel);
+	AbaqusModel abaqusModel = new AbaqusModel();
+	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
 	assertEquals(10, abaqusModel.getVertices().get(0).getY(), 0.0001);
@@ -87,11 +91,12 @@ public class AbaqusModelBuilderTest {
     }
 
     @Test
-    public void dluzszyOd2PPionowy() {
+    public void dlugiPionowy() {
 	GCodeVertex vertex1 = gCodeModel.addLayer(5.0).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(5.0).addVertex(10, 18);
 	gCodeModel.addLayer(5.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = abaqusBuilder.generateVertices(gCodeModel);
+	AbaqusModel abaqusModel = new AbaqusModel();
+	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
 	assertEquals(10, abaqusModel.getVertices().get(0).getY(), 0.0001);
@@ -127,11 +132,12 @@ public class AbaqusModelBuilderTest {
     }
 
     @Test
-    public void dluzszyOd2PPoziomy() {
+    public void dlugiPoziomy() {
 	GCodeVertex vertex1 = gCodeModel.addLayer(6.0).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(6.0).addVertex(18, 10);
 	gCodeModel.addLayer(6.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = abaqusBuilder.generateVertices(gCodeModel);
+	AbaqusModel abaqusModel = new AbaqusModel();
+	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
 	assertEquals(10, abaqusModel.getVertices().get(0).getY(), 0.0001);
@@ -167,11 +173,12 @@ public class AbaqusModelBuilderTest {
     }
 
     @Test
-    public void dluzszyOd2PSkosny() {
+    public void dlugiSkosny() {
 	GCodeVertex vertex1 = gCodeModel.addLayer(7.0).addVertex(0.65, 6);
 	GCodeVertex vertex2 = gCodeModel.addLayer(7.0).addVertex(8.5, 7.7);
 	gCodeModel.addLayer(7.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = abaqusBuilder.generateVertices(gCodeModel);
+	AbaqusModel abaqusModel = new AbaqusModel();
+	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(0.65, abaqusModel.getVertices().get(0).getX(), 0.0001);
 	assertEquals(6, abaqusModel.getVertices().get(0).getY(), 0.0001);

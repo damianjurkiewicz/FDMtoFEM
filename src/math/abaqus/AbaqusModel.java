@@ -5,55 +5,68 @@ import java.util.List;
 
 public class AbaqusModel {
 
-    private List<AbaqusVertex> vertices;
+	private List<AbaqusVertex> vertices;
 
-    private List<AbaqusEdge> edges;
+	private List<AbaqusEdge> edges;
 
-    public AbaqusModel() {
-	this.vertices = new ArrayList<AbaqusVertex>();
-	this.edges = new ArrayList<AbaqusEdge>();
-    }
+	public AbaqusModel() {
+		this.vertices = new ArrayList<AbaqusVertex>();
+		this.edges = new ArrayList<AbaqusEdge>();
+	}
 
-    public List<AbaqusVertex> getVertices() {
-	return vertices;
-    }
+	public List<AbaqusVertex> getVertices() {
+		return vertices;
+	}
 
-    public void setVertices(List<AbaqusVertex> vertices) {
-	this.vertices = vertices;
-    }
+	public void setVertices(List<AbaqusVertex> vertices) {
+		this.vertices = vertices;
+	}
 
-    public List<AbaqusEdge> getEdges() {
-	return edges;
-    }
+	public List<AbaqusEdge> getEdges() {
+		return edges;
+	}
 
-    public void setEdges(List<AbaqusEdge> edges) {
-	this.edges = edges;
-    }
+	public void setEdges(List<AbaqusEdge> edges) {
+		this.edges = edges;
+	}
 
-    public AbaqusVertex addVertex(double x, double y, double z) {
-	AbaqusVertex vertex = new AbaqusVertex(x, y, z);
-	this.vertices.add(vertex);
-	return vertex;
-    }
+	public AbaqusVertex addVertex(double x, double y, double z) {
+		AbaqusVertex vertex = new AbaqusVertex(x, y, z);
+		this.vertices.add(vertex);
+		return vertex;
+	}
 
-    public void removeVertex(AbaqusVertex vertex) {
-	this.vertices.remove(vertex);
-    }
+	public void removeVertex(AbaqusVertex vertex) {
+		this.vertices.remove(vertex);
+	}
 
-    public AbaqusEdge addEdge(AbaqusVertex vertex1, AbaqusVertex vertex2) {
-	AbaqusEdge edge = new AbaqusEdge(vertex1, vertex2);
-	this.edges.add(edge);
-	return edge;
-    }
+	public AbaqusEdge addEdge(AbaqusVertex vertex1, AbaqusVertex vertex2) {
+		AbaqusEdge edge = new AbaqusEdge(vertex1, vertex2);
+		this.edges.add(edge);
+		return edge;
+	}
 
-    public void removeEdge(AbaqusEdge edge) {
-	this.edges.remove(edge);
-    }
+	public void removeEdge(AbaqusEdge edge) {
+		this.edges.remove(edge);
+	}
 
-    public String toString() {
-	Double x = this.getVertices().get(0).getX();
-	return x.toString();
+	public AbaqusEdge findEdge(AbaqusVertex vertex1, AbaqusVertex vertex2) {
+		AbaqusEdge abaqusEdge = null;
+		
+		for (AbaqusEdge currentAbaqusEdge : this.edges) {
 
-    }
+			if (currentAbaqusEdge.getVertex1() == vertex1 && currentAbaqusEdge.getVertex2() == vertex2) {
+				abaqusEdge = currentAbaqusEdge;
+			}
+		}
+		
+		return abaqusEdge;
+	}
+
+	public String toString() {
+		Double x = this.getVertices().get(0).getX();
+		return x.toString();
+
+	}
 
 }
