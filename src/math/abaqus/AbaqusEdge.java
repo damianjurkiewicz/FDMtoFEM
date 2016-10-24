@@ -4,11 +4,14 @@ public class AbaqusEdge {
 
     private AbaqusVertex vertex1;
     private AbaqusVertex vertex2;
+    private int edgeId;
 
-    public AbaqusEdge(AbaqusVertex vertex1, AbaqusVertex vertex2) {
+    public AbaqusEdge(int edgeId, AbaqusVertex vertex1, AbaqusVertex vertex2) {
 	super();
+	this.edgeId = edgeId;
 	this.vertex1 = vertex1;
 	this.vertex2 = vertex2;
+
     }
 
     public AbaqusVertex getVertex1() {
@@ -25,6 +28,14 @@ public class AbaqusEdge {
 
     public void setVertex2(AbaqusVertex vertex2) {
 	this.vertex2 = vertex2;
+    }
+
+    public int getEdgeId() {
+	return edgeId;
+    }
+
+    public void setEdgeId(int edgeId) {
+	this.edgeId = edgeId;
     }
 
 }

@@ -5,10 +5,11 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import math.abaqus.AbaqusModel;
+import math.abaqus.AbaqusModelBuilder;
 
 public class Writer {
 
-    public void write(AbaqusModel model) {
+    public void write(AbaqusModel model, AbaqusModelBuilder builder) {
 
 	PrintWriter printWriter = null;
 	try {
@@ -37,62 +38,10 @@ public class Writer {
 	printWriter.println("*Instance, name=FDM_Print-1, part=FDM_Print");
 	printWriter.println("*Node");
 	printWriter.println(model);
-	printWriter.println("*Element, type=B31");
-	printWriter.println(model);
-	printWriter.println("*Nset, nset=_PickedSet2, internal, generate");
-	printWriter.println("1,  11,   1");
-	printWriter.println("*Elset, elset=_PickedSet2, internal, generate");
-	printWriter.println("1,  10,   1");
-	printWriter.println("** Section: Cross_section  Profile: Circle");
-	printWriter.println("*Beam Section, elset=_PickedSet2, material=ABS,");
-	printWriter.println("temperature=GRADIENTS, section=CIRC");
-	printWriter.println("1.");
-	printWriter.println("0.,0.,-1.");
 	printWriter.println("*End Instance");
 	printWriter.println("**");
-	printWriter.println("*Nset, nset=_PickedSet4, internal, instance=FDM_Print-1");
-	printWriter.println("11,");
-	printWriter.println("*Nset, nset=_PickedSet5, internal, instance=FDM_Print-1");
-	printWriter.println("1,");
 	printWriter.println("*End Assembly");
-	printWriter.println("**");
-	printWriter.println("** MATERIALS");
-	printWriter.println("**");
-	printWriter.println("*Material, name=ABS");
-	printWriter.println("*Elastic");
-	printWriter.println("1.4e+06, 0.35");
-	printWriter.println("**");
-	printWriter.println("** STEP: Analisys_Step");
-	printWriter.println("**");
-	printWriter.println("*Step, name=Analisys_Step, nlgeom=NO");
-	printWriter.println("*Static");
-	printWriter.println("1., 1., 1e-05, 1.");
-	printWriter.println("**");
-	printWriter.println("** BOUNDARY CONDITIONS");
-	printWriter.println("**");
-	printWriter.println("** Name: Boundary_Conditions Type: ");
-	printWriter.println("Symmetry/Antisymmetry/Encastre");
-	printWriter.println("*Boundary");
-	printWriter.println("_PickedSet5, ENCASTRE");
-	printWriter.println("**");
-	printWriter.println("** LOADS");
-	printWriter.println("**");
-	printWriter.println("** Name: Concentrated_force   Type: Concentrated force");
-	printWriter.println("*Cload");
-	printWriter.println("_PickedSet4, 2, -10.");
-	printWriter.println("**");
-	printWriter.println("** OUTPUT REQUESTS");
-	printWriter.println("**");
-	printWriter.println("*Restart, write, frequency=0");
-	printWriter.println("**");
-	printWriter.println("** FIELD OUTPUT: F-Output-1");
-	printWriter.println("**");
-	printWriter.println("*Output, field, variable=PRESELECT");
-	printWriter.println("**");
-	printWriter.println("** HISTORY OUTPUT: H-Output-1");
-	printWriter.println("**Output, history, variable=PRESELECT*");
-	printWriter.println("*End Step");
-	printWriter.println("");
+
 	printWriter.close();
     }
 

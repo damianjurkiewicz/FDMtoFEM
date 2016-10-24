@@ -5,12 +5,14 @@ public class AbaqusVertex {
     private double x;
     private double y;
     private double z;
+    private int id;
 
-    public AbaqusVertex(double x, double y, double z) {
+    public AbaqusVertex(int id, double x, double y, double z) {
 	super();
 	this.x = x;
 	this.y = y;
 	this.z = z;
+	this.id = id;
     }
 
     public double getX() {
@@ -35,6 +37,14 @@ public class AbaqusVertex {
 
     public void setZ(double z) {
 	this.z = z;
+    }
+
+    public int getId() {
+	return id;
+    }
+
+    public void setId(int id) {
+	this.id = id;
     }
 
 }
