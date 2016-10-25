@@ -1,6 +1,8 @@
 package math.abaqus;
 
-public class AbaqusVertex {
+import math.writer.WriterVisitor;
+
+public class AbaqusVertex implements WriterSource {
 
     private double x;
     private double y;
@@ -45,6 +47,12 @@ public class AbaqusVertex {
 
     public void setId(int id) {
 	this.id = id;
+    }
+
+    @Override
+    public void przyjmij(WriterVisitor writer) {
+	// TODO Auto-generated method stub
+
     }
 
 }
