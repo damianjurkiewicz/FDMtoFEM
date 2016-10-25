@@ -119,51 +119,12 @@ public class AbaqusModelBuilder {
 		    if (abaqusVertex.getZ() == nextAbaqusVertex.getZ()
 			    || abaqusVertex.getZ() == nextAbaqusVertex.getZ() + 1) {
 			double d = Equations.computeVertexDistance(abaqusVertex, nextAbaqusVertex);
-			if (d < 1.4) {
-			    abaqusModel.addEdge(edgeId++, abaqusVertex, nextAbaqusVertex);
+			if (d <= 1) {
+			    abaqusModel.addInPlaneJoint(edgeId++, abaqusVertex, nextAbaqusVertex);
 			}
 		    }
 		}
 	    }
-
 	}
-
     }
-
-    public void remove(GCodeModel gCodeModel, AbaqusModel abaqusModel) {
-
-	for (AbaqusEdge abaqusEdge : abaqusModel.getEdges()) {
-
-	    for (AbaqusEdge nextAbaqusEdge : abaqusModel.getEdges()) {
-
-		if (abaqusEdge.getVertex1() == nextAbaqusEdge.getVertex1()
-			|| abaqusEdge.getVertex2() == nextAbaqusEdge.getVertex2()) {
-
-		    double x1 = abaqusEdge.getVertex1().getX();
-		    double y1 = abaqusEdge.getVertex1().getY();
-		    double x2 = abaqusEdge.getVertex2().getX();
-		    double y2 = abaqusEdge.getVertex2().getY();
-
-		    double xx1 = nextAbaqusEdge.getVertex1().getX();
-		    double yy1 = nextAbaqusEdge.getVertex1().getY();
-		    double xx2 = nextAbaqusEdge.getVertex2().getX();
-		    double yy2 = nextAbaqusEdge.getVertex2().getY();
-
-		    double a1 = (y2 - y1) / (x2 - x1);
-		    double a2 = (yy2 - yy1) / (xx2 - xx1);
-
-		    double tan = Math.abs((a1 - a2) / (1 + a1 * a2));
-
-		    if (tan > 58) {
-			abaqusModel.removeEdge(abaqusEdge);
-		    }
-
-		}
-
-	    }
-
-	}
-
-    }
-
 }

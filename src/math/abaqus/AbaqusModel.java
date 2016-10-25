@@ -9,11 +9,14 @@ public class AbaqusModel {
 
     private List<AbaqusVertex> vertices;
 
-    private List<AbaqusEdge> edges;
+    public List<AbaqusEdge> edges;
+
+    public List<AbaqusEdge> inPlaneJoints;
 
     public AbaqusModel() {
 	this.vertices = new ArrayList<AbaqusVertex>();
 	this.edges = new ArrayList<AbaqusEdge>();
+	this.inPlaneJoints = new ArrayList<AbaqusEdge>();
     }
 
     public List<AbaqusVertex> getVertices() {
@@ -30,6 +33,14 @@ public class AbaqusModel {
 
     public void setEdges(List<AbaqusEdge> edges) {
 	this.edges = edges;
+    }
+
+    public List<AbaqusEdge> getInPlaneJoints() {
+	return inPlaneJoints;
+    }
+
+    public void setInPlaneJoints(List<AbaqusEdge> inPlaneJoints) {
+	this.inPlaneJoints = inPlaneJoints;
     }
 
     public AbaqusVertex addVertex(int id, double x, double y, double z, GCodeEdge gCodeEdge) {
@@ -52,22 +63,20 @@ public class AbaqusModel {
 	this.edges.remove(edge);
     }
 
-    public AbaqusEdge findEdge(AbaqusVertex vertex1, AbaqusVertex vertex2) {
-	AbaqusEdge abaqusEdge = null;
+    public AbaqusEdge addInPlaneJoint(int edgeId, AbaqusVertex vertex1, AbaqusVertex vertex2) {
+	AbaqusEdge edge = new AbaqusEdge(edgeId, vertex1, vertex2);
+	this.inPlaneJoints.add(edge);
+	return edge;
+    }
 
-	for (AbaqusEdge currentAbaqusEdge : this.edges) {
-
-	    if (currentAbaqusEdge.getVertex1() == vertex1 && currentAbaqusEdge.getVertex2() == vertex2) {
-		abaqusEdge = currentAbaqusEdge;
-	    }
-	}
-
-	return abaqusEdge;
+    public void removeInPlaneJoint(AbaqusEdge edge) {
+	this.inPlaneJoints.remove(edge);
     }
 
     public String toString() {
 	String vertices = "";
-	String elements = "";
+	String edges = "";
+	String inPlaneJoints = "";
 
 	for (AbaqusVertex abaqusVertex : this.vertices) {
 	    double x = abaqusVertex.getX();
@@ -81,10 +90,17 @@ public class AbaqusModel {
 	    int edgeId = abaqusEdge.getEdgeId();
 	    int v1Id = abaqusEdge.getVertex1().getId();
 	    int v2Id = abaqusEdge.getVertex2().getId();
-	    elements = elements + edgeId + ", " + v1Id + ", " + v2Id + "\n";
+	    edges = edges + edgeId + ", " + v1Id + ", " + v2Id + "\n";
 	}
 
-	return vertices + "*Element, type=B31" + "\n" + elements;
+	for (AbaqusEdge abaqusInPlaneJoint : this.inPlaneJoints) {
+	    int edgeId = abaqusInPlaneJoint.getEdgeId();
+	    int v1Id = abaqusInPlaneJoint.getVertex1().getId();
+	    int v2Id = abaqusInPlaneJoint.getVertex2().getId();
+	    inPlaneJoints = inPlaneJoints + edgeId + ", " + v1Id + ", " + v2Id + "\n";
+	}
+
+	return vertices + "*Element, type=B31" + "\n" + edges + inPlaneJoints;
     }
 
 }
