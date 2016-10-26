@@ -3,15 +3,20 @@ package math.abaqus;
 import java.util.ArrayList;
 import java.util.List;
 
+import math.model.GCodeEdge;
+
 public class Model {
 
     private List<Vertex> vertices;
 
     private List<Edge> edges;
 
+    public List<Edge> inPlaneJoints;
+
     public Model() {
 	this.vertices = new ArrayList<Vertex>();
 	this.edges = new ArrayList<Edge>();
+	this.inPlaneJoints = new ArrayList<Edge>();
     }
 
     public List<Vertex> getVertices() {
@@ -32,6 +37,12 @@ public class Model {
 
     public Vertex addVertex(int id, double x, double y, double z) {
 	Vertex vertex = new Vertex(id, x, y, z);
+	this.vertices.add(vertex);
+	return vertex;
+    }
+
+    public Vertex addVertex(int id, double x, double y, double z, GCodeEdge gCodeEdge) {
+	Vertex vertex = new Vertex(id, x, y, z, gCodeEdge);
 	this.vertices.add(vertex);
 	return vertex;
     }
@@ -61,6 +72,16 @@ public class Model {
 	}
 
 	return abaqusEdge;
+    }
+
+    public Edge addInPlaneJoint(int edgeId, Vertex vertex1, Vertex vertex2) {
+	Edge edge = new Edge(edgeId, vertex1, vertex2);
+	this.inPlaneJoints.add(edge);
+	return edge;
+    }
+
+    public void removeInPlaneJoint(Edge edge) {
+	this.inPlaneJoints.remove(edge);
     }
 
     public String toString() {
