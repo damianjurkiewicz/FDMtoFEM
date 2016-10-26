@@ -1,8 +1,6 @@
 package math.abaqus;
 
-import math.writer.WriterVisitor;
-
-public class AbaqusEdge implements WriterSource {
+public class AbaqusEdge {
 
     private AbaqusVertex vertex1;
     private AbaqusVertex vertex2;
@@ -38,12 +36,6 @@ public class AbaqusEdge implements WriterSource {
 
     public void setEdgeId(int edgeId) {
 	this.edgeId = edgeId;
-    }
-
-    @Override
-    public void przyjmij(WriterVisitor writer) {
-	// TODO Auto-generated method stub
-
     }
 
 }
