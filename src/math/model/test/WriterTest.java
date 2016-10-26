@@ -21,8 +21,8 @@ public class WriterTest {
 
     @Test
     public void writerTest() {
-	Writer zapisz = new Writer();
-	zapisz.writeAbaqus(abaqusModel, abaqusBuilder);
+	Writer writer = new Writer();
+	writer.writeAbaqus(abaqusModel, abaqusBuilder);
     }
 
 }
