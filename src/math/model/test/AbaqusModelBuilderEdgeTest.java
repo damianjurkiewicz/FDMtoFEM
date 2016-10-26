@@ -28,7 +28,7 @@ public class AbaqusModelBuilderEdgeTest {
 	gCodeLayer.addEdge(v2, v3);
 	gCodeLayer.addEdge(v3, v4);
 
-	Model abaqusModel = abaqusBuilder.build(gCodeModel);
+	Model abaqusModel = abaqusBuilder.buildVerticesCloud(gCodeModel);
 
 	assertEquals(2.342, abaqusModel.getEdges().get(0).getVertex1().getX(), 0.01);
 	assertEquals(5.429, abaqusModel.getEdges().get(0).getVertex1().getY(), 0.01);

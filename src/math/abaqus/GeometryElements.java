@@ -4,6 +4,6 @@ import math.writer.WriterVisitor;
 
 public interface GeometryElements {
 
-    public void przyjmij(WriterVisitor writer);
+    public void receive(WriterVisitor writer);
 
 }

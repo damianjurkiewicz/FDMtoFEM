@@ -23,14 +23,14 @@ public class ModelBuilder {
 	this.elementSize = elementSize;
     }
 
-    public Model build(GCodeModel gCodeModel) {
-	Model abaqusModel = new Model();
-	generateVertices(gCodeModel, abaqusModel);
-	generateEdges(gCodeModel, abaqusModel);
-	return abaqusModel;
+    public Model buildVerticesCloud(GCodeModel gCodeModel) {
+	Model model = new Model();
+	generateVerticesCloud(gCodeModel, model);
+	generateEdgesCloud(gCodeModel, model);
+	return model;
     }
 
-    public void generateVertices(GCodeModel gCodeModel, Model abaqusModel) {
+    public void generateVerticesCloud(GCodeModel gCodeModel, Model model) {
 	// TODO: elementSize should be User choince, but with reasonable bounds
 
 	double x1, y1, x2, y2, nextX, nextY, z;
@@ -55,7 +55,7 @@ public class ModelBuilder {
 		numberOfWholeSegments = Equations.computeNumberOfWholeSegments(edgeLength, elementSize);
 
 		if (numberOfWholeSegments == 0) {
-		    abaqusModel.addVertex(id++, (x1 + x2) / 2, (y1 + y2) / 2, z);
+		    model.addVertex(id++, (x1 + x2) / 2, (y1 + y2) / 2, z);
 		}
 
 		if (numberOfWholeSegments > 0) {
@@ -66,17 +66,15 @@ public class ModelBuilder {
 		    leftoverX = Equations.computeLeftover(edgeLengthX, incrementX, numberOfWholeSegments);
 		    leftoverY = Equations.computeLeftover(edgeLengthY, incrementY, numberOfWholeSegments);
 
-		    // abaqusModel.addVertex(x1, y1, z);
 		    nextX = x1 + leftoverX / 2;
 		    nextY = y1 + leftoverY / 2;
-		    abaqusModel.addVertex(id++, nextX, nextY, z);
+		    model.addVertex(id++, nextX, nextY, z);
 
 		    for (int k = 0; k < numberOfWholeSegments; k++) {
 			nextX = nextX + incrementX;
 			nextY = nextY + incrementY;
-			abaqusModel.addVertex(id++, nextX, nextY, z);
+			model.addVertex(id++, nextX, nextY, z);
 		    }
-		    // abaqusModel.addVertex(x2, y2, z);
 
 		}
 	    }
@@ -85,20 +83,19 @@ public class ModelBuilder {
 
     }
 
-    public void generateEdges(GCodeModel gCodeModel, Model abaqusModel) {
+    public void generateEdgesCloud(GCodeModel gCodeModel, Model model) {
 
 	int edgeId = 1;
 
-	for (Vertex currentAbaqusVertex : abaqusModel.getVertices()) {
+	for (Vertex currentVertex : model.getVertices()) {
 
-	    for (Vertex abaqusVertex : abaqusModel.getVertices()) {
+	    for (Vertex vertex : model.getVertices()) {
 
-		if (currentAbaqusVertex.getZ() == abaqusVertex.getZ()
-			|| currentAbaqusVertex.getZ() == abaqusVertex.getZ() + 1) {
+		if (currentVertex.getZ() == vertex.getZ() || currentVertex.getZ() == vertex.getZ() + 1) {
 
-		    if (currentAbaqusVertex != abaqusVertex) {
+		    if (currentVertex != vertex) {
 			// metoda w abaqus
-			double vertexDistance = Equations.computeVertexDistance(currentAbaqusVertex, abaqusVertex);
+			double vertexDistance = Equations.computeVertexDistance(currentVertex, vertex);
 
 			// if (currentAbaqusVertex.getDistanceTo(abaqusVertex)
 			// <=
@@ -106,19 +103,28 @@ public class ModelBuilder {
 
 			if (vertexDistance <= this.elementSize + 0.000001) {
 
-			    if (abaqusModel.findEdge(currentAbaqusVertex, abaqusVertex) != null) {
+			    if (model.findEdge(currentVertex, vertex) != null) {
 				break;
 			    }
 
-			    if (abaqusModel.findEdge(abaqusVertex, currentAbaqusVertex) != null) {
+			    if (model.findEdge(vertex, currentVertex) != null) {
 				break;
 			    }
 
-			    abaqusModel.addEdge(edgeId++, abaqusVertex, currentAbaqusVertex);
+			    model.addEdge(edgeId++, vertex, currentVertex);
 			}
 		    }
 		}
 	    }
 	}
     }
+
+    public void generateVerticesGCodeBased(GCodeModel gCodeModel, Model model) {
+
+    }
+
+    public void generateEdgesGCodeBased(GCodeModel gCodeModel, Model model) {
+
+    }
+
 }
