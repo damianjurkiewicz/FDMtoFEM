@@ -1,9 +1,9 @@
-package math.abaqus;
+package math.geometry.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import math.model.GCodeEdge;
+import math.gcode.model.GCodeEdge;
 
 public class Model {
 

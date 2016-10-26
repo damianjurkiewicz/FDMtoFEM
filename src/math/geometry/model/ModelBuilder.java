@@ -1,9 +1,9 @@
-package math.abaqus;
+package math.geometry.model;
 
 import equations.Equations;
-import math.model.GCodeEdge;
-import math.model.GCodeLayer;
-import math.model.GCodeModel;
+import math.gcode.model.GCodeEdge;
+import math.gcode.model.GCodeLayer;
+import math.gcode.model.GCodeModel;
 
 // Code Tells You How, Comments Tell You Why
 public class ModelBuilder {
@@ -25,10 +25,17 @@ public class ModelBuilder {
 	this.elementSize = elementSize;
     }
 
-    public Model buildVerticesCloud(GCodeModel gCodeModel) {
+    public Model buildCloud(GCodeModel gCodeModel) {
 	Model model = new Model();
 	generateVerticesCloud(gCodeModel, model);
 	generateEdgesCloud(gCodeModel, model);
+	return model;
+    }
+
+    public Model buildGCodeBased(GCodeModel gCodeModel) {
+	Model model = new Model();
+	generateVerticesGCodeBased(gCodeModel, model);
+	generateEdgesGCodeBased(gCodeModel, model);
 	return model;
     }
 

@@ -1,6 +1,6 @@
-package math.model;
+package math.gcode.model;
 
-import math.gcode.GCodeFile;
+import math.gcode.reader.GCodeFile;
 
 public class GCodeModelBuilder {
 

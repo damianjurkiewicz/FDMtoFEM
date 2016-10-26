@@ -1,4 +1,4 @@
-package math.gcode.test;
+package math.test.gcode.reader;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import math.gcode.GCodeFile;
-import math.gcode.GCodeReader;
+import math.gcode.reader.GCodeFile;
+import math.gcode.reader.GCodeReader;
 
 public class GCodeFileReading {
 

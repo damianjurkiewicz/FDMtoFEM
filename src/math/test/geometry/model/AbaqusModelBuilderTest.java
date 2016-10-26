@@ -1,14 +1,14 @@
-package math.model.test;
+package math.test.geometry.model;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import math.abaqus.Model;
-import math.abaqus.ModelBuilder;
-import math.model.GCodeModel;
-import math.model.GCodeModelBuilder;
-import math.model.GCodeVertex;
+import math.gcode.model.GCodeModel;
+import math.gcode.model.GCodeModelBuilder;
+import math.gcode.model.GCodeVertex;
+import math.geometry.model.Model;
+import math.geometry.model.ModelBuilder;
 
 public class AbaqusModelBuilderTest {
 

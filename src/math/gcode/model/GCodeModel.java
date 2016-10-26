@@ -1,4 +1,4 @@
-package math.model;
+package math.gcode.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package math.gcode;
+package math.gcode.reader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

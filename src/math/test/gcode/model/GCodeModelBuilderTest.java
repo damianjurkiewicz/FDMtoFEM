@@ -1,13 +1,13 @@
-package math.model.test;
+package math.test.gcode.model;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import math.gcode.GCodeFile;
-import math.gcode.GCodeReader;
-import math.model.GCodeModel;
-import math.model.GCodeModelBuilder;
+import math.gcode.model.GCodeModel;
+import math.gcode.model.GCodeModelBuilder;
+import math.gcode.reader.GCodeFile;
+import math.gcode.reader.GCodeReader;
 
 public class GCodeModelBuilderTest {
 

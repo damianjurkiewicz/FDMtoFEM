@@ -1,4 +1,4 @@
-package math.abaqus;
+package math.geometry.model;
 
 public class Edge {
 

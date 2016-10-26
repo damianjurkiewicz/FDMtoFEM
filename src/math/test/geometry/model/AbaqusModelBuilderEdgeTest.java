@@ -1,15 +1,15 @@
-package math.model.test;
+package math.test.geometry.model;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import math.abaqus.Model;
-import math.abaqus.ModelBuilder;
-import math.model.GCodeLayer;
-import math.model.GCodeModel;
-import math.model.GCodeModelBuilder;
-import math.model.GCodeVertex;
+import math.gcode.model.GCodeLayer;
+import math.gcode.model.GCodeModel;
+import math.gcode.model.GCodeModelBuilder;
+import math.gcode.model.GCodeVertex;
+import math.geometry.model.Model;
+import math.geometry.model.ModelBuilder;
 
 public class AbaqusModelBuilderEdgeTest {
 
@@ -28,7 +28,7 @@ public class AbaqusModelBuilderEdgeTest {
 	gCodeLayer.addEdge(v2, v3);
 	gCodeLayer.addEdge(v3, v4);
 
-	Model abaqusModel = abaqusBuilder.buildVerticesCloud(gCodeModel);
+	Model abaqusModel = abaqusBuilder.buildCloud(gCodeModel);
 
 	assertEquals(2.342, abaqusModel.getEdges().get(0).getVertex1().getX(), 0.01);
 	assertEquals(5.429, abaqusModel.getEdges().get(0).getVertex1().getY(), 0.01);

@@ -1,13 +1,13 @@
-package math.model.test;
+package math.test.writer;
 
 import org.junit.Test;
 
-import math.abaqus.Model;
-import math.abaqus.ModelBuilder;
-import math.gcode.GCodeFile;
-import math.gcode.GCodeReader;
-import math.model.GCodeModel;
-import math.model.GCodeModelBuilder;
+import math.gcode.model.GCodeModel;
+import math.gcode.model.GCodeModelBuilder;
+import math.gcode.reader.GCodeFile;
+import math.gcode.reader.GCodeReader;
+import math.geometry.model.Model;
+import math.geometry.model.ModelBuilder;
 import math.writer.Writer;
 
 public class WriterTest {
@@ -16,13 +16,13 @@ public class WriterTest {
     GCodeReader reader = new GCodeReader();
     GCodeFile file = reader.read("C:\\Users\\Damian\\Desktop\\aba.txt");
     GCodeModel gCodeModel = gCodeBuilder.build(file);
-    ModelBuilder abaqusBuilder = new ModelBuilder(1.5);
-    Model abaqusModel = abaqusBuilder.buildVerticesCloud(gCodeModel);
+    ModelBuilder builder = new ModelBuilder(1.5);
+    Model model = builder.buildCloud(gCodeModel);
 
     @Test
     public void writerTest() {
 	Writer zapisz = new Writer();
-	zapisz.writeAbaqus(abaqusModel, abaqusBuilder);
+	zapisz.writeAbaqus(model, builder);
     }
 
 }

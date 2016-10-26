@@ -1,7 +1,7 @@
 package math.writer;
 
-import math.abaqus.Edge;
-import math.abaqus.Vertex;
+import math.geometry.model.Edge;
+import math.geometry.model.Vertex;
 
 public class WriterVisitorAbaqus implements WriterVisitor {
 

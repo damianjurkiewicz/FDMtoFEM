@@ -1,12 +1,12 @@
-package math.model.test;
+package math.test.gcode.model;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import math.model.GCodeLayer;
-import math.model.GCodeModel;
-import math.model.GCodeVertex;
+import math.gcode.model.GCodeLayer;
+import math.gcode.model.GCodeModel;
+import math.gcode.model.GCodeVertex;
 
 public class GCodeVertexTest {
 

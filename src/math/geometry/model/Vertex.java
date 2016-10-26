@@ -1,6 +1,6 @@
-package math.abaqus;
+package math.geometry.model;
 
-import math.model.GCodeEdge;
+import math.gcode.model.GCodeEdge;
 
 public class Vertex {
 

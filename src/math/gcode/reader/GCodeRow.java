@@ -1,4 +1,4 @@
-package math.gcode;
+package math.gcode.reader;
 
 public class GCodeRow {
     private String g;

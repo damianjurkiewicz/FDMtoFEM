@@ -1,4 +1,4 @@
-package math.abaqus;
+package math.geometry.model;
 
 public class InPlaneJoint extends Edge {
     public InPlaneJoint(int edgeId, Vertex vertex1, Vertex vertex2) {

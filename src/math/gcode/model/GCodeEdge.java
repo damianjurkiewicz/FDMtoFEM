@@ -1,4 +1,4 @@
-package math.model;
+package math.gcode.model;
 
 public class GCodeEdge {
 
