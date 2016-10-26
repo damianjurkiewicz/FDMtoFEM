@@ -1,6 +1,8 @@
 package math.abaqus;
 
-public class Vertex {
+import math.writer.WriterVisitor;
+
+public class Vertex implements GeometryElements {
 
     private double x;
     private double y;
@@ -45,6 +47,11 @@ public class Vertex {
 
     public void setId(int id) {
 	this.id = id;
+    }
+
+    @Override
+    public String receive(WriterVisitor writer) {
+	return writer.generateNodes(this);
     }
 
 }

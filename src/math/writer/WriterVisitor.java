@@ -9,6 +9,8 @@ public interface WriterVisitor {
 
     public String generateNodes(Vertex vertex);
 
+    public String generateMiddle();
+
     public String generateElements(Edge edges);
 
     public String generateBottom();

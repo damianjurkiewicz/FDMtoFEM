@@ -18,6 +18,12 @@ public class WriterVisitorAnsys implements WriterVisitor {
     }
 
     @Override
+    public String generateMiddle() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
     public String generateElements(Edge edges) {
 	// TODO Auto-generated method stub
 	return null;
