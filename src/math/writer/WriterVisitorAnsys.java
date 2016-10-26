@@ -6,7 +6,6 @@ import math.geometry.model.Vertex;
 
 public class WriterVisitorAnsys implements WriterVisitor {
 
-    @Override
     public String generateHeader() {
 	// TODO Auto-generated method stub
 	return null;
@@ -18,7 +17,6 @@ public class WriterVisitorAnsys implements WriterVisitor {
 	return null;
     }
 
-    @Override
     public String generateMiddle() {
 	// TODO Auto-generated method stub
 	return null;
@@ -30,7 +28,6 @@ public class WriterVisitorAnsys implements WriterVisitor {
 	return null;
     }
 
-    @Override
     public String generateBottom() {
 	// TODO Auto-generated method stub
 	return null;

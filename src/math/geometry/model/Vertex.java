@@ -64,9 +64,8 @@ public class Vertex implements GeometryElements {
     }
 
     @Override
-    public void receive(WriterVisitor writer) {
-	// TODO Auto-generated method stub
-
+    public String receive(WriterVisitor writer) {
+	return writer.generateNodes(this);
     }
 
 }

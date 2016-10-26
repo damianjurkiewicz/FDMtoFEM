@@ -9,8 +9,8 @@ public class InPlaneJoint extends Edge implements GeometryElements {
     }
 
     @Override
-    public void receive(WriterVisitor writer) {
-	writer.generateInPlaneJoint(this);
+    public String receive(WriterVisitor writer) {
+	return writer.generateInPlaneJoint(this);
     }
 
 }

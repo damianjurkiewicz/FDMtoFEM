@@ -41,8 +41,8 @@ public class Edge implements GeometryElements {
     }
 
     @Override
-    public void receive(WriterVisitor writer) {
-	// writer.generateElements(this);
+    public String receive(WriterVisitor writer) {
+	return writer.generateElements(this);
     }
 
 }

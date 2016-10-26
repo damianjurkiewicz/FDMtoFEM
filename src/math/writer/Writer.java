@@ -25,25 +25,25 @@ public class Writer {
 	    e.printStackTrace();
 	}
 
-	WriterVisitorAbaqus sdk = new WriterVisitorAbaqus();
+	WriterVisitorAbaqus abaqusWriter = new WriterVisitorAbaqus();
 
-	printWriter.println(sdk.generateHeader());
+	printWriter.println(abaqusWriter.generateHeader());
 
 	for (Vertex abaqusVertex : model.getVertices()) {
-	    printWriter.println(sdk.generateNodes(abaqusVertex));
+	    printWriter.println(abaqusVertex.receive(abaqusWriter));
 	}
 
-	printWriter.println(sdk.generateMiddle());
+	printWriter.println(abaqusWriter.generateMiddle());
 
 	for (Edge abaqusEdge : model.getEdges()) {
-	    printWriter.println(sdk.generateElements(abaqusEdge));
+	    printWriter.println(abaqusEdge.receive(abaqusWriter));
 	}
 
 	// for (InPlaneJoint inPlaneJoint : model.getInPlaneJoints()) {
 	// printWriter.println(sdk.generateInPlaneJoint(inPlaneJoint));
 	// }
 
-	printWriter.println(sdk.generateBottom());
+	printWriter.println(abaqusWriter.generateBottom());
 
 	printWriter.close();
     }

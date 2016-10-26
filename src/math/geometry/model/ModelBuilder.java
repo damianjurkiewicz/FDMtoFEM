@@ -83,12 +83,9 @@ public class ModelBuilder {
 			nextY = nextY + incrementY;
 			model.addVertex(id++, nextX, nextY, z);
 		    }
-
 		}
 	    }
-
 	}
-
     }
 
     public void generateEdgesCloud(GCodeModel gCodeModel, Model model) {
@@ -116,7 +113,6 @@ public class ModelBuilder {
 			    if (model.findEdge(vertex, currentVertex) != null) {
 				break;
 			    }
-
 			    model.addEdge(edgeId++, vertex, currentVertex);
 			}
 		    }
