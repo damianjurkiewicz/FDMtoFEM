@@ -16,14 +16,14 @@ public class WriterTest {
     GCodeReader reader = new GCodeReader();
     GCodeFile file = reader.read("C:\\Users\\Damian\\Desktop\\aba2.txt");
     GCodeModel gCodeModel = gCodeBuilder.build(file);
-    ModelBuilder builder = new ModelBuilder(0.2);
-    Model modelCloud = builder.buildCloud(gCodeModel);
+    ModelBuilder builder = new ModelBuilder(1);
+    // Model modelCloud = builder.buildCloud(gCodeModel);
     Model modelGCodeBased = builder.buildGCodeBased(gCodeModel);
 
     @Test
     public void writerTest() {
 	Writer zapisz = new Writer();
-	zapisz.writeAbaqus(modelCloud, builder);
+	zapisz.writeAbaqus(modelGCodeBased, builder);
     }
 
 }

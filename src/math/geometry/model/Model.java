@@ -92,26 +92,4 @@ public class Model {
 	this.inPlaneJoints.remove(edge);
     }
 
-    public String toString() {
-	String vertices = "";
-	String elements = "";
-
-	for (Vertex abaqusVertex : this.vertices) {
-	    double x = abaqusVertex.getX();
-	    double y = abaqusVertex.getY();
-	    double z = abaqusVertex.getZ();
-	    int id = abaqusVertex.getId();
-	    vertices = vertices + id + ", " + x + ", " + y + ", " + z + "\n";
-	}
-
-	for (Edge abaqusEdge : this.edges) {
-	    int edgeId = abaqusEdge.getEdgeId();
-	    int v1Id = abaqusEdge.getVertex1().getId();
-	    int v2Id = abaqusEdge.getVertex2().getId();
-	    elements = elements + edgeId + ", " + v1Id + ", " + v2Id + "\n";
-	}
-
-	return vertices + "*Element, type=B31" + "\n" + elements;
-    }
-
 }

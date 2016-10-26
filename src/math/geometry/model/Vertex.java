@@ -19,7 +19,7 @@ public class Vertex implements GeometryElements {
     }
 
     public Vertex(int id, double x, double y, double z, GCodeEdge gCodeEdge) {
-	super();
+	this(id, x, y, z);
 	this.gCodeEdge = gCodeEdge;
     }
 
@@ -55,11 +55,11 @@ public class Vertex implements GeometryElements {
 	this.id = id;
     }
 
-    public GCodeEdge getgCodeEdge() {
+    public GCodeEdge getGCodeEdge() {
 	return gCodeEdge;
     }
 
-    public void setgCodeEdge(GCodeEdge gCodeEdge) {
+    public void setGCodeEdge(GCodeEdge gCodeEdge) {
 	this.gCodeEdge = gCodeEdge;
     }
 

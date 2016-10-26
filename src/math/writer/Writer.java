@@ -40,7 +40,7 @@ public class Writer {
 	}
 
 	// for (InPlaneJoint inPlaneJoint : model.getInPlaneJoints()) {
-	// printWriter.println(sdk.generateInPlaneJoint(inPlaneJoint));
+	// printWriter.println(inPlaneJoint.receive(abaqusWriter));
 	// }
 
 	printWriter.println(abaqusWriter.generateBottom());

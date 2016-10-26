@@ -93,7 +93,6 @@ public class ModelBuilder {
 	for (Vertex currentVertex : model.getVertices()) {
 
 	    for (Vertex vertex : model.getVertices()) {
-
 		if (currentVertex.getZ() == vertex.getZ() || currentVertex.getZ() == vertex.getZ() + 1) {
 
 		    if (currentVertex != vertex) {
@@ -104,7 +103,7 @@ public class ModelBuilder {
 			// <=
 			// this.elementSize){
 
-			if (vertexDistance <= this.elementSize + 0.000001) {
+			if (vertexDistance <= 1.2) {
 
 			    if (model.findEdge(currentVertex, vertex) != null) {
 				break;
@@ -114,6 +113,7 @@ public class ModelBuilder {
 				break;
 			    }
 			    model.addEdge(edgeId++, vertex, currentVertex);
+
 			}
 		    }
 		}
@@ -140,7 +140,7 @@ public class ModelBuilder {
 		y2 = gCodeEdge.getVertex2().getY();
 		z = gCodeEdge.getLayer().getZ();
 		Vertex vertex1;
-		Vertex vertex2 = null;
+		Vertex vertex2;
 		Vertex vertex3;
 
 		edgeLength = Equations.computeEdgeLength(x1, x2, y1, y2);
@@ -196,7 +196,7 @@ public class ModelBuilder {
 
 	    for (Vertex nextVertex : model.getVertices()) {
 
-		if (vertex.getgCodeEdge() != nextVertex.getgCodeEdge()) {
+		if (vertex.getGCodeEdge() != nextVertex.getGCodeEdge()) {
 
 		    if (vertex.getZ() == nextVertex.getZ() || vertex.getZ() == nextVertex.getZ() + 1) {
 			double d = Equations.computeVertexDistance(vertex, nextVertex);
