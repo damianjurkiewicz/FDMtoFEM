@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import math.geometry.model.Edge;
+import math.geometry.model.InPlaneJoint;
+import math.geometry.model.InterLayerJoint;
 import math.geometry.model.Model;
 import math.geometry.model.ModelBuilder;
 import math.geometry.model.Vertex;
@@ -39,9 +41,13 @@ public class Writer {
 	    printWriter.println(abaqusEdge.receive(abaqusWriter));
 	}
 
-	// for (InPlaneJoint inPlaneJoint : model.getInPlaneJoints()) {
-	// printWriter.println(inPlaneJoint.receive(abaqusWriter));
-	// }
+	for (InPlaneJoint inPlaneJoint : model.getInPlaneJoints()) {
+	    printWriter.println(inPlaneJoint.receive(abaqusWriter));
+	}
+
+	for (InterLayerJoint interLayerJoint : model.getInterLayerJoints()) {
+	    printWriter.println(interLayerJoint.receive(abaqusWriter));
+	}
 
 	printWriter.println(abaqusWriter.generateBottom());
 

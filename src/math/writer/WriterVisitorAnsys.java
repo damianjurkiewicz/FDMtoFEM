@@ -2,6 +2,7 @@ package math.writer;
 
 import math.geometry.model.Edge;
 import math.geometry.model.InPlaneJoint;
+import math.geometry.model.InterLayerJoint;
 import math.geometry.model.Vertex;
 
 public class WriterVisitorAnsys implements WriterVisitor {
@@ -35,6 +36,12 @@ public class WriterVisitorAnsys implements WriterVisitor {
 
     @Override
     public String generateInPlaneJoint(InPlaneJoint inPlaneJoint) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    public String generateInterLayerJoint(InterLayerJoint interLayerJoint) {
 	// TODO Auto-generated method stub
 	return null;
     }

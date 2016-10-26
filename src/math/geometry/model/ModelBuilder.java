@@ -198,15 +198,20 @@ public class ModelBuilder {
 
 		if (vertex.getGCodeEdge() != nextVertex.getGCodeEdge()) {
 
-		    if (vertex.getZ() == nextVertex.getZ() || vertex.getZ() == nextVertex.getZ() + 1) {
+		    if (vertex.getZ() == nextVertex.getZ() || vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
 			double d = Equations.computeVertexDistance(vertex, nextVertex);
 			if (d <= 1) {
 			    model.addInPlaneJoint(edgeId++, vertex, nextVertex);
+			}
+			if (vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
+			    d = Equations.computeLayerDistance(vertex, nextVertex);
+			    if (d <= 1) {
+				model.addInterLayerJoint(edgeId++, vertex, nextVertex);
+			    }
 			}
 		    }
 		}
 	    }
 	}
     }
-
 }

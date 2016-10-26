@@ -13,10 +13,13 @@ public class Model {
 
     public List<InPlaneJoint> inPlaneJoints;
 
+    public List<InterLayerJoint> interLayerJoints;
+
     public Model() {
 	this.vertices = new ArrayList<Vertex>();
 	this.edges = new ArrayList<Edge>();
 	this.inPlaneJoints = new ArrayList<InPlaneJoint>();
+	this.interLayerJoints = new ArrayList<InterLayerJoint>();
     }
 
     public List<Vertex> getVertices() {
@@ -41,6 +44,14 @@ public class Model {
 
     public void setInPlaneJoints(List<InPlaneJoint> inPlaneJoints) {
 	this.inPlaneJoints = inPlaneJoints;
+    }
+
+    public List<InterLayerJoint> getInterLayerJoints() {
+	return interLayerJoints;
+    }
+
+    public void setInterLayerJoints(List<InterLayerJoint> interLayerJoints) {
+	this.interLayerJoints = interLayerJoints;
     }
 
     public Vertex addVertex(int id, double x, double y, double z) {
@@ -90,6 +101,16 @@ public class Model {
 
     public void removeInPlaneJoint(Edge edge) {
 	this.inPlaneJoints.remove(edge);
+    }
+
+    public InterLayerJoint addInterLayerJoint(int edgeId, Vertex vertex1, Vertex vertex2) {
+	InterLayerJoint interLayerJoint = new InterLayerJoint(edgeId, vertex1, vertex2);
+	this.interLayerJoints.add(interLayerJoint);
+	return interLayerJoint;
+    }
+
+    public void removeInterLayerJoint(Edge edge) {
+	this.interLayerJoints.remove(edge);
     }
 
 }
