@@ -1,6 +1,6 @@
 package equations;
 
-import math.abaqus.AbaqusVertex;
+import math.abaqus.Vertex;
 
 public class Equations {
 
@@ -46,7 +46,7 @@ public class Equations {
 	return edgeLeftover;
     }
 
-    public static double computeVertexDistance(AbaqusVertex vertex1, AbaqusVertex vertex2) {
+    public static double computeVertexDistance(Vertex vertex1, Vertex vertex2) {
 	double vertexDistance = Math
 		.sqrt(Math.pow(vertex2.getX() - vertex1.getX(), 2d) + Math.pow(vertex2.getY() - vertex1.getY(), 2d));
 	return vertexDistance;

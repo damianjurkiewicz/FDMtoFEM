@@ -1,13 +1,13 @@
 package math.abaqus;
 
-public class AbaqusVertex {
+public class Vertex {
 
     private double x;
     private double y;
     private double z;
     private int id;
 
-    public AbaqusVertex(int id, double x, double y, double z) {
+    public Vertex(int id, double x, double y, double z) {
 	super();
 	this.x = x;
 	this.y = y;

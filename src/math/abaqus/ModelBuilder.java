@@ -6,11 +6,11 @@ import math.model.GCodeLayer;
 import math.model.GCodeModel;
 
 // Code Tells You How, Comments Tell You Why
-public class AbaqusModelBuilder {
+public class ModelBuilder {
 
     private double elementSize;
 
-    public AbaqusModelBuilder(double elementSize) {
+    public ModelBuilder(double elementSize) {
 	super();
 	this.elementSize = elementSize;
     }
@@ -23,14 +23,14 @@ public class AbaqusModelBuilder {
 	this.elementSize = elementSize;
     }
 
-    public AbaqusModel build(GCodeModel gCodeModel) {
-	AbaqusModel abaqusModel = new AbaqusModel();
+    public Model build(GCodeModel gCodeModel) {
+	Model abaqusModel = new Model();
 	generateVertices(gCodeModel, abaqusModel);
 	generateEdges(gCodeModel, abaqusModel);
 	return abaqusModel;
     }
 
-    public void generateVertices(GCodeModel gCodeModel, AbaqusModel abaqusModel) {
+    public void generateVertices(GCodeModel gCodeModel, Model abaqusModel) {
 	// TODO: elementSize should be User choince, but with reasonable bounds
 
 	double x1, y1, x2, y2, nextX, nextY, z;
@@ -85,13 +85,13 @@ public class AbaqusModelBuilder {
 
     }
 
-    public void generateEdges(GCodeModel gCodeModel, AbaqusModel abaqusModel) {
+    public void generateEdges(GCodeModel gCodeModel, Model abaqusModel) {
 
 	int edgeId = 1;
 
-	for (AbaqusVertex currentAbaqusVertex : abaqusModel.getVertices()) {
+	for (Vertex currentAbaqusVertex : abaqusModel.getVertices()) {
 
-	    for (AbaqusVertex abaqusVertex : abaqusModel.getVertices()) {
+	    for (Vertex abaqusVertex : abaqusModel.getVertices()) {
 
 		if (currentAbaqusVertex.getZ() == abaqusVertex.getZ()
 			|| currentAbaqusVertex.getZ() == abaqusVertex.getZ() + 1) {

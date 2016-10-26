@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import math.abaqus.AbaqusModel;
-import math.abaqus.AbaqusModelBuilder;
+import math.abaqus.Model;
+import math.abaqus.ModelBuilder;
 import math.model.GCodeLayer;
 import math.model.GCodeModel;
 import math.model.GCodeModelBuilder;
@@ -13,7 +13,7 @@ import math.model.GCodeVertex;
 
 public class AbaqusModelBuilderEdgeTest {
 
-    AbaqusModelBuilder abaqusBuilder = new AbaqusModelBuilder(1.5);
+    ModelBuilder abaqusBuilder = new ModelBuilder(1.5);
     GCodeModelBuilder gCodeBuilder = new GCodeModelBuilder();
     GCodeModel gCodeModel = new GCodeModel();
 
@@ -28,7 +28,7 @@ public class AbaqusModelBuilderEdgeTest {
 	gCodeLayer.addEdge(v2, v3);
 	gCodeLayer.addEdge(v3, v4);
 
-	AbaqusModel abaqusModel = abaqusBuilder.build(gCodeModel);
+	Model abaqusModel = abaqusBuilder.build(gCodeModel);
 
 	assertEquals(2.342, abaqusModel.getEdges().get(0).getVertex1().getX(), 0.01);
 	assertEquals(5.429, abaqusModel.getEdges().get(0).getVertex1().getY(), 0.01);

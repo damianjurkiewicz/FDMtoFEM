@@ -1,12 +1,16 @@
 package math.writer;
 
-import math.abaqus.AbaqusEdge;
-import math.abaqus.AbaqusVertex;
+import math.abaqus.Edge;
+import math.abaqus.Vertex;
 
 public interface WriterVisitor {
 
-    public void generateNodes(AbaqusVertex vertex);
+    public String generateHeader();
 
-    public void generateElements(AbaqusEdge edges);
+    public String generateNodes(Vertex vertex);
+
+    public String generateElements(Edge edges);
+
+    public String generateBottom();
 
 }

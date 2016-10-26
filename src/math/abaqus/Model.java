@@ -3,57 +3,57 @@ package math.abaqus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbaqusModel {
+public class Model {
 
-    private List<AbaqusVertex> vertices;
+    private List<Vertex> vertices;
 
-    private List<AbaqusEdge> edges;
+    private List<Edge> edges;
 
-    public AbaqusModel() {
-	this.vertices = new ArrayList<AbaqusVertex>();
-	this.edges = new ArrayList<AbaqusEdge>();
+    public Model() {
+	this.vertices = new ArrayList<Vertex>();
+	this.edges = new ArrayList<Edge>();
     }
 
-    public List<AbaqusVertex> getVertices() {
+    public List<Vertex> getVertices() {
 	return vertices;
     }
 
-    public void setVertices(List<AbaqusVertex> vertices) {
+    public void setVertices(List<Vertex> vertices) {
 	this.vertices = vertices;
     }
 
-    public List<AbaqusEdge> getEdges() {
+    public List<Edge> getEdges() {
 	return edges;
     }
 
-    public void setEdges(List<AbaqusEdge> edges) {
+    public void setEdges(List<Edge> edges) {
 	this.edges = edges;
     }
 
-    public AbaqusVertex addVertex(int id, double x, double y, double z) {
-	AbaqusVertex vertex = new AbaqusVertex(id, x, y, z);
+    public Vertex addVertex(int id, double x, double y, double z) {
+	Vertex vertex = new Vertex(id, x, y, z);
 	this.vertices.add(vertex);
 	return vertex;
     }
 
-    public void removeVertex(AbaqusVertex vertex) {
+    public void removeVertex(Vertex vertex) {
 	this.vertices.remove(vertex);
     }
 
-    public AbaqusEdge addEdge(int edgeId, AbaqusVertex vertex1, AbaqusVertex vertex2) {
-	AbaqusEdge edge = new AbaqusEdge(edgeId, vertex1, vertex2);
+    public Edge addEdge(int edgeId, Vertex vertex1, Vertex vertex2) {
+	Edge edge = new Edge(edgeId, vertex1, vertex2);
 	this.edges.add(edge);
 	return edge;
     }
 
-    public void removeEdge(AbaqusEdge edge) {
+    public void removeEdge(Edge edge) {
 	this.edges.remove(edge);
     }
 
-    public AbaqusEdge findEdge(AbaqusVertex vertex1, AbaqusVertex vertex2) {
-	AbaqusEdge abaqusEdge = null;
+    public Edge findEdge(Vertex vertex1, Vertex vertex2) {
+	Edge abaqusEdge = null;
 
-	for (AbaqusEdge currentAbaqusEdge : this.edges) {
+	for (Edge currentAbaqusEdge : this.edges) {
 
 	    if (currentAbaqusEdge.getVertex1() == vertex1 && currentAbaqusEdge.getVertex2() == vertex2) {
 		abaqusEdge = currentAbaqusEdge;
@@ -67,7 +67,7 @@ public class AbaqusModel {
 	String vertices = "";
 	String elements = "";
 
-	for (AbaqusVertex abaqusVertex : this.vertices) {
+	for (Vertex abaqusVertex : this.vertices) {
 	    double x = abaqusVertex.getX();
 	    double y = abaqusVertex.getY();
 	    double z = abaqusVertex.getZ();
@@ -75,7 +75,7 @@ public class AbaqusModel {
 	    vertices = vertices + id + ", " + x + ", " + y + ", " + z + "\n";
 	}
 
-	for (AbaqusEdge abaqusEdge : this.edges) {
+	for (Edge abaqusEdge : this.edges) {
 	    int edgeId = abaqusEdge.getEdgeId();
 	    int v1Id = abaqusEdge.getVertex1().getId();
 	    int v2Id = abaqusEdge.getVertex2().getId();

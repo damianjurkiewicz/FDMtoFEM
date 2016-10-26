@@ -3,28 +3,30 @@ package math.writer;
 import math.abaqus.Edge;
 import math.abaqus.Vertex;
 
-public class WriterVisitorAbaqus implements WriterVisitor {
+public class WriterVisitorAnsys implements WriterVisitor {
 
     @Override
     public String generateHeader() {
-	return "kurwa";
+	// TODO Auto-generated method stub
+	return null;
     }
 
     @Override
     public String generateNodes(Vertex vertex) {
-	Double x = vertex.getX();
-	return x.toString();
+	// TODO Auto-generated method stub
+	return null;
     }
 
     @Override
     public String generateElements(Edge edges) {
-	int k = edges.getEdgeId();
-	return "" + k;
+	// TODO Auto-generated method stub
+	return null;
     }
 
     @Override
     public String generateBottom() {
-	return "chuj";
+	// TODO Auto-generated method stub
+	return null;
     }
 
 }

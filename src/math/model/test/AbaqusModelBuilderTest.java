@@ -4,15 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import math.abaqus.AbaqusModel;
-import math.abaqus.AbaqusModelBuilder;
+import math.abaqus.Model;
+import math.abaqus.ModelBuilder;
 import math.model.GCodeModel;
 import math.model.GCodeModelBuilder;
 import math.model.GCodeVertex;
 
 public class AbaqusModelBuilderTest {
 
-    AbaqusModelBuilder abaqusBuilder = new AbaqusModelBuilder(1.5);
+    ModelBuilder abaqusBuilder = new ModelBuilder(1.5);
     GCodeModelBuilder gCodeBuilder = new GCodeModelBuilder();
     GCodeModel gCodeModel = new GCodeModel();
 
@@ -22,7 +22,7 @@ public class AbaqusModelBuilderTest {
 	GCodeVertex vertex1 = gCodeModel.addLayer(1).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(1).addVertex(11, 11);
 	gCodeModel.addLayer(1.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = new AbaqusModel();
+	Model abaqusModel = new Model();
 	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
@@ -38,7 +38,7 @@ public class AbaqusModelBuilderTest {
 	GCodeVertex vertex1 = gCodeModel.addLayer(2).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(2).addVertex(10, 12);
 	gCodeModel.addLayer(2.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = new AbaqusModel();
+	Model abaqusModel = new Model();
 	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
@@ -57,7 +57,7 @@ public class AbaqusModelBuilderTest {
 	GCodeVertex vertex1 = gCodeModel.addLayer(2).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(2).addVertex(12, 10);
 	gCodeModel.addLayer(3.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = new AbaqusModel();
+	Model abaqusModel = new Model();
 	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
@@ -76,7 +76,7 @@ public class AbaqusModelBuilderTest {
 	GCodeVertex vertex1 = gCodeModel.addLayer(4.0).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(4.0).addVertex(12, 12);
 	gCodeModel.addLayer(4.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = new AbaqusModel();
+	Model abaqusModel = new Model();
 	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
@@ -95,7 +95,7 @@ public class AbaqusModelBuilderTest {
 	GCodeVertex vertex1 = gCodeModel.addLayer(5.0).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(5.0).addVertex(10, 18);
 	gCodeModel.addLayer(5.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = new AbaqusModel();
+	Model abaqusModel = new Model();
 	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
@@ -136,7 +136,7 @@ public class AbaqusModelBuilderTest {
 	GCodeVertex vertex1 = gCodeModel.addLayer(6.0).addVertex(10, 10);
 	GCodeVertex vertex2 = gCodeModel.addLayer(6.0).addVertex(18, 10);
 	gCodeModel.addLayer(6.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = new AbaqusModel();
+	Model abaqusModel = new Model();
 	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(10, abaqusModel.getVertices().get(0).getX(), 0.0001);
@@ -177,7 +177,7 @@ public class AbaqusModelBuilderTest {
 	GCodeVertex vertex1 = gCodeModel.addLayer(7.0).addVertex(0.65, 6);
 	GCodeVertex vertex2 = gCodeModel.addLayer(7.0).addVertex(8.5, 7.7);
 	gCodeModel.addLayer(7.0).addEdge(vertex1, vertex2);
-	AbaqusModel abaqusModel = new AbaqusModel();
+	Model abaqusModel = new Model();
 	abaqusBuilder.generateVertices(gCodeModel, abaqusModel);
 
 	assertEquals(0.65, abaqusModel.getVertices().get(0).getX(), 0.0001);
