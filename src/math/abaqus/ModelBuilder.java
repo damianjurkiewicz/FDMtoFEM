@@ -25,12 +25,12 @@ public class ModelBuilder {
 
     public Model buildVerticesCloud(GCodeModel gCodeModel) {
 	Model model = new Model();
-	generateVerticesCloud(gCodeModel, model);
-	generateEdgesCloud(gCodeModel, model);
+	generateVertices(gCodeModel, model);
+	generateEdges(gCodeModel, model);
 	return model;
     }
 
-    public void generateVerticesCloud(GCodeModel gCodeModel, Model model) {
+    public void generateVertices(GCodeModel gCodeModel, Model model) {
 	// TODO: elementSize should be User choince, but with reasonable bounds
 
 	double x1, y1, x2, y2, nextX, nextY, z;
@@ -83,7 +83,7 @@ public class ModelBuilder {
 
     }
 
-    public void generateEdgesCloud(GCodeModel gCodeModel, Model model) {
+    public void generateEdges(GCodeModel gCodeModel, Model model) {
 
 	int edgeId = 1;
 
@@ -94,12 +94,10 @@ public class ModelBuilder {
 		if (currentVertex.getZ() == vertex.getZ() || currentVertex.getZ() == vertex.getZ() + 1) {
 
 		    if (currentVertex != vertex) {
-			// metoda w abaqus
 			double vertexDistance = Equations.computeVertexDistance(currentVertex, vertex);
 
 			// if (currentAbaqusVertex.getDistanceTo(abaqusVertex)
-			// <=
-			// this.elementSize){
+			// <= this.elementSize){
 
 			if (vertexDistance <= this.elementSize + 0.000001) {
 
@@ -117,14 +115,6 @@ public class ModelBuilder {
 		}
 	    }
 	}
-    }
-
-    public void generateVerticesGCodeBased(GCodeModel gCodeModel, Model model) {
-
-    }
-
-    public void generateEdgesGCodeBased(GCodeModel gCodeModel, Model model) {
-
     }
 
 }
