@@ -33,9 +33,15 @@ public class Writer {
 	    printWriter.println(sdk.generateNodes(abaqusVertex));
 	}
 
+	printWriter.println(sdk.generateMiddle());
+
 	for (Edge abaqusEdge : model.getEdges()) {
 	    printWriter.println(sdk.generateElements(abaqusEdge));
 	}
+
+	// for (InPlaneJoint inPlaneJoint : model.getInPlaneJoints()) {
+	// printWriter.println(sdk.generateInPlaneJoint(inPlaneJoint));
+	// }
 
 	printWriter.println(sdk.generateBottom());
 

@@ -48,7 +48,6 @@ public class ModelBuilder {
 	double edgeLengthX, edgeLengthY;
 	double edgeLength;
 	int numberOfWholeSegments;
-	int id = 1;
 
 	for (GCodeLayer gCodeLayer : gCodeModel.getLayers()) {
 
@@ -93,8 +92,6 @@ public class ModelBuilder {
     }
 
     public void generateEdgesCloud(GCodeModel gCodeModel, Model model) {
-
-	int edgeId = 1;
 
 	for (Vertex currentVertex : model.getVertices()) {
 
@@ -199,17 +196,16 @@ public class ModelBuilder {
     }
 
     public void generateEdgesGCodeBased(GCodeModel gCodeModel, Model model) {
-	for (Vertex abaqusVertex : model.getVertices()) {
+	for (Vertex vertex : model.getVertices()) {
 
-	    for (Vertex nextAbaqusVertex : model.getVertices()) {
+	    for (Vertex nextVertex : model.getVertices()) {
 
-		if (abaqusVertex.getgCodeEdge() != nextAbaqusVertex.getgCodeEdge()) {
+		if (vertex.getgCodeEdge() != nextVertex.getgCodeEdge()) {
 
-		    if (abaqusVertex.getZ() == nextAbaqusVertex.getZ()
-			    || abaqusVertex.getZ() == nextAbaqusVertex.getZ() + 1) {
-			double d = Equations.computeVertexDistance(abaqusVertex, nextAbaqusVertex);
+		    if (vertex.getZ() == nextVertex.getZ() || vertex.getZ() == nextVertex.getZ() + 1) {
+			double d = Equations.computeVertexDistance(vertex, nextVertex);
 			if (d <= 1) {
-			    model.addInPlaneJoint(edgeId++, abaqusVertex, nextAbaqusVertex);
+			    model.addInPlaneJoint(edgeId++, vertex, nextVertex);
 			}
 		    }
 		}

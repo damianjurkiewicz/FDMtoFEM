@@ -1,6 +1,8 @@
 package math.geometry.model;
 
-public class Edge {
+import math.writer.WriterVisitor;
+
+public class Edge implements GeometryElements {
 
     private Vertex vertex1;
     private Vertex vertex2;
@@ -36,6 +38,11 @@ public class Edge {
 
     public void setEdgeId(int edgeId) {
 	this.edgeId = edgeId;
+    }
+
+    @Override
+    public void receive(WriterVisitor writer) {
+	// writer.generateElements(this);
     }
 
 }

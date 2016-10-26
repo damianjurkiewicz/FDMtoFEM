@@ -11,12 +11,12 @@ public class Model {
 
     private List<Edge> edges;
 
-    public List<Edge> inPlaneJoints;
+    public List<InPlaneJoint> inPlaneJoints;
 
     public Model() {
 	this.vertices = new ArrayList<Vertex>();
 	this.edges = new ArrayList<Edge>();
-	this.inPlaneJoints = new ArrayList<Edge>();
+	this.inPlaneJoints = new ArrayList<InPlaneJoint>();
     }
 
     public List<Vertex> getVertices() {
@@ -33,6 +33,14 @@ public class Model {
 
     public void setEdges(List<Edge> edges) {
 	this.edges = edges;
+    }
+
+    public List<InPlaneJoint> getInPlaneJoints() {
+	return inPlaneJoints;
+    }
+
+    public void setInPlaneJoints(List<InPlaneJoint> inPlaneJoints) {
+	this.inPlaneJoints = inPlaneJoints;
     }
 
     public Vertex addVertex(int id, double x, double y, double z) {
@@ -74,10 +82,10 @@ public class Model {
 	return abaqusEdge;
     }
 
-    public Edge addInPlaneJoint(int edgeId, Vertex vertex1, Vertex vertex2) {
-	Edge edge = new Edge(edgeId, vertex1, vertex2);
-	this.inPlaneJoints.add(edge);
-	return edge;
+    public InPlaneJoint addInPlaneJoint(int edgeId, Vertex vertex1, Vertex vertex2) {
+	InPlaneJoint inPlaneJoint = new InPlaneJoint(edgeId, vertex1, vertex2);
+	this.inPlaneJoints.add(inPlaneJoint);
+	return inPlaneJoint;
     }
 
     public void removeInPlaneJoint(Edge edge) {

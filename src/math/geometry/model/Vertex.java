@@ -1,8 +1,9 @@
 package math.geometry.model;
 
 import math.gcode.model.GCodeEdge;
+import math.writer.WriterVisitor;
 
-public class Vertex {
+public class Vertex implements GeometryElements {
 
     private double x;
     private double y;
@@ -60,6 +61,12 @@ public class Vertex {
 
     public void setgCodeEdge(GCodeEdge gCodeEdge) {
 	this.gCodeEdge = gCodeEdge;
+    }
+
+    @Override
+    public void receive(WriterVisitor writer) {
+	// TODO Auto-generated method stub
+
     }
 
 }
