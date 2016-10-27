@@ -10,7 +10,7 @@ import math.gcode.model.GCodeVertex;
 import math.geometry.model.Model;
 import math.geometry.model.ModelBuilder;
 
-public class AbaqusModelBuilderTest {
+public class ModelBuilderTest {
 
     ModelBuilder abaqusBuilder = new ModelBuilder(1.5);
     GCodeModelBuilder gCodeBuilder = new GCodeModelBuilder();

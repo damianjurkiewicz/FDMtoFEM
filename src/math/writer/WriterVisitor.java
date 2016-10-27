@@ -11,8 +11,8 @@ public interface WriterVisitor {
 
     public String generateInPlaneJoint(InPlaneJoint inPlaneJoint);
 
-    public String generateElements(Edge edges);
-
     public String generateInterLayerJoint(InterLayerJoint interLayerJoint);
+
+    public String generateElements(Edge edges);
 
 }

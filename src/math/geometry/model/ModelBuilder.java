@@ -9,8 +9,8 @@ import math.gcode.model.GCodeModel;
 public class ModelBuilder {
 
     private double elementSize;
-    int id = 1;
-    int edgeId = 1;
+    int nodeId = 1;
+    int elementId = 1;
 
     public ModelBuilder(double elementSize) {
 	super();
@@ -63,7 +63,7 @@ public class ModelBuilder {
 		numberOfWholeSegments = Equations.computeNumberOfWholeSegments(edgeLength, elementSize);
 
 		if (numberOfWholeSegments == 0) {
-		    model.addVertex(id++, (x1 + x2) / 2, (y1 + y2) / 2, z);
+		    model.addVertex(nodeId++, (x1 + x2) / 2, (y1 + y2) / 2, z);
 		}
 
 		if (numberOfWholeSegments > 0) {
@@ -76,12 +76,12 @@ public class ModelBuilder {
 
 		    nextX = x1 + leftoverX / 2;
 		    nextY = y1 + leftoverY / 2;
-		    model.addVertex(id++, nextX, nextY, z);
+		    model.addVertex(nodeId++, nextX, nextY, z);
 
 		    for (int k = 0; k < numberOfWholeSegments; k++) {
 			nextX = nextX + incrementX;
 			nextY = nextY + incrementY;
-			model.addVertex(id++, nextX, nextY, z);
+			model.addVertex(nodeId++, nextX, nextY, z);
 		    }
 		}
 	    }
@@ -103,7 +103,7 @@ public class ModelBuilder {
 			// <=
 			// this.elementSize){
 
-			if (vertexDistance <= 1.2) {
+			if (vertexDistance <= this.elementSize + 0.01) {
 
 			    if (model.findEdge(currentVertex, vertex) != null) {
 				break;
@@ -112,7 +112,7 @@ public class ModelBuilder {
 			    if (model.findEdge(vertex, currentVertex) != null) {
 				break;
 			    }
-			    model.addEdge(edgeId++, vertex, currentVertex);
+			    model.addEdge(elementId++, vertex, currentVertex);
 
 			}
 		    }
@@ -147,17 +147,17 @@ public class ModelBuilder {
 		numberOfWholeSegments = Equations.computeNumberOfWholeSegments(edgeLength, elementSize);
 
 		if (numberOfWholeSegments < 1) {
-		    vertex1 = model.addVertex(id++, x1, y1, z, gCodeEdge);
-		    vertex2 = model.addVertex(id++, x2, y2, z, gCodeEdge);
-		    model.addEdge(edgeId++, vertex1, vertex2);
+		    vertex1 = model.addVertex(nodeId++, x1, y1, z, gCodeEdge);
+		    vertex2 = model.addVertex(nodeId++, x2, y2, z, gCodeEdge);
+		    model.addEdge(elementId++, vertex1, vertex2);
 		}
 
 		if (numberOfWholeSegments == 1) {
-		    vertex1 = model.addVertex(id++, x1, y1, z, gCodeEdge);
-		    vertex2 = model.addVertex(id++, (x1 + x2) / 2, (y1 + y2) / 2, z, gCodeEdge);
-		    vertex3 = model.addVertex(id++, x2, y2, z, gCodeEdge);
-		    model.addEdge(edgeId++, vertex1, vertex2);
-		    model.addEdge(edgeId++, vertex2, vertex3);
+		    vertex1 = model.addVertex(nodeId++, x1, y1, z, gCodeEdge);
+		    vertex2 = model.addVertex(nodeId++, (x1 + x2) / 2, (y1 + y2) / 2, z, gCodeEdge);
+		    vertex3 = model.addVertex(nodeId++, x2, y2, z, gCodeEdge);
+		    model.addEdge(elementId++, vertex1, vertex2);
+		    model.addEdge(elementId++, vertex2, vertex3);
 		}
 
 		if (numberOfWholeSegments > 1) {
@@ -174,18 +174,18 @@ public class ModelBuilder {
 		    nextX = x1 + incrX;
 		    nextY = y1 + incrY;
 
-		    vertex1 = model.addVertex(id++, x1, y1, z, gCodeEdge);
-		    vertex2 = model.addVertex(id++, nextX, nextY, z, gCodeEdge);
-		    model.addEdge(edgeId++, vertex1, vertex2);
+		    vertex1 = model.addVertex(nodeId++, x1, y1, z, gCodeEdge);
+		    vertex2 = model.addVertex(nodeId++, nextX, nextY, z, gCodeEdge);
+		    model.addEdge(elementId++, vertex1, vertex2);
 
 		    for (int k = 0; k < numberOfWholeSegments - 2; k++) {
-			vertex1 = model.addVertex(id++, nextX, nextY, z, gCodeEdge);
-			vertex2 = model.addVertex(id++, nextX = nextX + incrX, nextY = nextY + incrY, z, gCodeEdge);
-			model.addEdge(edgeId++, vertex1, vertex2);
+			vertex1 = model.addVertex(nodeId++, nextX, nextY, z, gCodeEdge);
+			vertex2 = model.addVertex(nodeId++, nextX = nextX + incrX, nextY = nextY + incrY, z, gCodeEdge);
+			model.addEdge(elementId++, vertex1, vertex2);
 		    }
 
-		    vertex3 = model.addVertex(id++, x2, y2, z, gCodeEdge);
-		    model.addEdge(edgeId++, vertex2, vertex3);
+		    vertex3 = model.addVertex(nodeId++, x2, y2, z, gCodeEdge);
+		    model.addEdge(elementId++, vertex2, vertex3);
 		}
 	    }
 	}
@@ -201,12 +201,12 @@ public class ModelBuilder {
 		    if (vertex.getZ() == nextVertex.getZ() || vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
 			double d = Equations.computeVertexDistance(vertex, nextVertex);
 			if (d <= 1) {
-			    model.addInPlaneJoint(edgeId++, vertex, nextVertex);
+			    model.addInPlaneJoint(elementId++, vertex, nextVertex);
 			}
 			if (vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
 			    d = Equations.computeLayerDistance(vertex, nextVertex);
 			    if (d <= 1) {
-				model.addInterLayerJoint(edgeId++, vertex, nextVertex);
+				model.addInterLayerJoint(elementId++, vertex, nextVertex);
 			    }
 			}
 		    }
