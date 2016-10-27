@@ -1,6 +1,6 @@
 package equations;
 
-import math.abaqus.Vertex;
+import math.geometry.Vertex;
 
 public class Equations {
 

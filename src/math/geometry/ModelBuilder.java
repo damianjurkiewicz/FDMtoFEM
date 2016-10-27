@@ -1,4 +1,4 @@
-package math.abaqus;
+package math.geometry;
 
 import equations.Equations;
 import math.model.GCodeEdge;

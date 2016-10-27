@@ -1,7 +1,7 @@
 package math.writer;
 
-import math.abaqus.Edge;
-import math.abaqus.Vertex;
+import math.geometry.Edge;
+import math.geometry.Vertex;
 
 public class WriterVisitorAnsys implements WriterVisitor {
 

@@ -1,4 +1,4 @@
-package math.abaqus;
+package math.geometry;
 
 import java.util.ArrayList;
 import java.util.List;

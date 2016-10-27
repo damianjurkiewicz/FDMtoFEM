@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-import math.abaqus.Edge;
-import math.abaqus.Model;
-import math.abaqus.ModelBuilder;
-import math.abaqus.Vertex;
+import math.geometry.Edge;
+import math.geometry.Model;
+import math.geometry.ModelBuilder;
+import math.geometry.Vertex;
 
 public class Writer {
 

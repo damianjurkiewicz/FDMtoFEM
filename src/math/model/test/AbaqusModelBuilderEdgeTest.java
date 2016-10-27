@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import math.abaqus.Model;
-import math.abaqus.ModelBuilder;
+import math.geometry.Model;
+import math.geometry.ModelBuilder;
 import math.model.GCodeLayer;
 import math.model.GCodeModel;
 import math.model.GCodeModelBuilder;

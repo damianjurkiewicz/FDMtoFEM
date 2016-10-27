@@ -2,10 +2,10 @@ package math.model.test;
 
 import org.junit.Test;
 
-import math.abaqus.Model;
-import math.abaqus.ModelBuilder;
 import math.gcode.GCodeFile;
 import math.gcode.GCodeReader;
+import math.geometry.Model;
+import math.geometry.ModelBuilder;
 import math.model.GCodeModel;
 import math.model.GCodeModelBuilder;
 import math.writer.Writer;
