@@ -39,7 +39,7 @@ public class ModelBuilder {
 	double edgeLengthX, edgeLengthY;
 	double edgeLength;
 	int numberOfWholeSegments;
-	int id = 1;
+	int vertexId = 1;
 
 	for (GCodeLayer gCodeLayer : gCodeModel.getLayers()) {
 
@@ -55,7 +55,7 @@ public class ModelBuilder {
 		numberOfWholeSegments = Equations.computeNumberOfWholeSegments(edgeLength, elementSize);
 
 		if (numberOfWholeSegments == 0) {
-		    model.addVertex(id++, (x1 + x2) / 2, (y1 + y2) / 2, z);
+		    model.addVertex(vertexId++, (x1 + x2) / 2, (y1 + y2) / 2, z);
 		}
 
 		if (numberOfWholeSegments > 0) {
@@ -68,12 +68,12 @@ public class ModelBuilder {
 
 		    nextX = x1 + leftoverX / 2;
 		    nextY = y1 + leftoverY / 2;
-		    model.addVertex(id++, nextX, nextY, z);
+		    model.addVertex(vertexId++, nextX, nextY, z);
 
-		    for (int k = 0; k < numberOfWholeSegments; k++) {
+		    for (int segmentNumber = 0; segmentNumber < numberOfWholeSegments; segmentNumber++) {
 			nextX = nextX + incrementX;
 			nextY = nextY + incrementY;
-			model.addVertex(id++, nextX, nextY, z);
+			model.addVertex(vertexId++, nextX, nextY, z);
 		    }
 
 		}
@@ -91,30 +91,26 @@ public class ModelBuilder {
 
 	    for (Vertex vertex : model.getVertices()) {
 
-		if (currentVertex.getZ() == vertex.getZ() || currentVertex.getZ() == vertex.getZ() + 1) {
+		if (currentVertex != vertex) {
+		    double vertexDistance = Equations.computeVertexDistance(currentVertex, vertex);
 
-		    if (currentVertex != vertex) {
-			double vertexDistance = Equations.computeVertexDistance(currentVertex, vertex);
+		    // if (currentAbaqusVertex.getDistanceTo(abaqusVertex)
+		    // <= this.elementSize){
 
-			// if (currentAbaqusVertex.getDistanceTo(abaqusVertex)
-			// <= this.elementSize){
+		    if (vertexDistance <= this.elementSize + 0.000001) {
 
-			if (vertexDistance <= this.elementSize + 0.000001) {
-
-			    if (model.findEdge(currentVertex, vertex) != null) {
-				break;
-			    }
-
-			    if (model.findEdge(vertex, currentVertex) != null) {
-				break;
-			    }
-
-			    model.addEdge(edgeId++, vertex, currentVertex);
+			if (model.findEdge(currentVertex, vertex) != null) {
+			    break;
 			}
+
+			if (model.findEdge(vertex, currentVertex) != null) {
+			    break;
+			}
+
+			model.addEdge(edgeId++, vertex, currentVertex);
 		    }
 		}
 	    }
 	}
     }
-
 }
