@@ -17,7 +17,7 @@ public class WriterTest {
     GCodeFile file = reader.read("C:\\Users\\Damian\\Desktop\\aba.txt");
     GCodeModel gCodeModel = gCodeBuilder.build(file);
     ModelBuilder abaqusBuilder = new ModelBuilder(1.5);
-    Model abaqusModel = abaqusBuilder.buildVerticesCloud(gCodeModel);
+    Model abaqusModel = abaqusBuilder.build(gCodeModel);
 
     @Test
     public void writerTest() {

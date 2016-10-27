@@ -23,7 +23,7 @@ public class ModelBuilder {
 	this.elementSize = elementSize;
     }
 
-    public Model buildVerticesCloud(GCodeModel gCodeModel) {
+    public Model build(GCodeModel gCodeModel) {
 	Model model = new Model();
 	generateVertices(gCodeModel, model);
 	generateEdges(gCodeModel, model);
