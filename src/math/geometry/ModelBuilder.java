@@ -83,6 +83,8 @@ public class ModelBuilder {
 
     }
 
+    boolean koko;
+
     public void generateEdges(GCodeModel gCodeModel, Model model) {
 
 	int edgeId = 1;
@@ -90,25 +92,28 @@ public class ModelBuilder {
 	for (Vertex currentVertex : model.getVertices()) {
 
 	    for (Vertex vertex : model.getVertices()) {
-
+		koko = false;
 		if (currentVertex != vertex) {
 		    double vertexDistance = Equations.computeVertexDistance(currentVertex, vertex);
 
 		    // if (currentAbaqusVertex.getDistanceTo(abaqusVertex)
 		    // <= this.elementSize){
 
-		    if (vertexDistance <= this.elementSize + 0.000001) {
+		    if (vertexDistance <= this.elementSize + 0.2) {
 
 			if (model.findEdge(currentVertex, vertex) != null) {
-			    break;
+			    koko = true;
 			}
 
 			if (model.findEdge(vertex, currentVertex) != null) {
-			    break;
+			    koko = true;
 			}
 
-			model.addEdge(edgeId++, vertex, currentVertex);
+			if (koko = true) {
+			    model.addEdge(edgeId++, vertex, currentVertex);
+			}
 		    }
+
 		}
 	    }
 	}

@@ -14,9 +14,9 @@ public class WriterTest {
 
     GCodeModelBuilder gCodeBuilder = new GCodeModelBuilder();
     GCodeReader reader = new GCodeReader();
-    GCodeFile file = reader.read("C:\\Users\\Damian\\Desktop\\aba2.txt");
+    GCodeFile file = reader.read("C:\\Users\\Damian\\Desktop\\aba.txt");
     GCodeModel gCodeModel = gCodeBuilder.build(file);
-    ModelBuilder abaqusBuilder = new ModelBuilder(1.5);
+    ModelBuilder abaqusBuilder = new ModelBuilder(0.789129);
     Model abaqusModel = abaqusBuilder.build(gCodeModel);
 
     @Test
