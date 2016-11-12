@@ -6,8 +6,8 @@ import math.gcode.model.GCodeModel;
 import math.gcode.model.GCodeModelBuilder;
 import math.gcode.reader.GCodeFile;
 import math.gcode.reader.GCodeReader;
+import math.geometry.builder.Builder;
 import math.geometry.model.Model;
-import math.geometry.model.ModelBuilder;
 import math.writer.Writer;
 
 public class WriterTest {
@@ -16,14 +16,13 @@ public class WriterTest {
     GCodeReader reader = new GCodeReader();
     GCodeFile file = reader.read("C:\\Users\\Damian\\Desktop\\aba.txt");
     GCodeModel gCodeModel = gCodeBuilder.build(file);
-    ModelBuilder builder = new ModelBuilder(0.789);
-    // Model modelCloud = builder.buildCloud(gCodeModel);
-    Model modelGCodeBased = builder.buildGCodeBased(gCodeModel);
+    Builder builder = new Builder(0.789);
+    Model modelCloud = builder.buildCloud(gCodeModel);
 
     @Test
     public void writerTest() {
 	Writer zapisz = new Writer();
-	zapisz.writeAbaqus(modelGCodeBased, builder);
+	zapisz.writeAbaqus(modelCloud);
     }
 
 }

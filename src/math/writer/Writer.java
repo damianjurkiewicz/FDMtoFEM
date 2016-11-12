@@ -8,12 +8,11 @@ import math.geometry.model.Edge;
 import math.geometry.model.InPlaneJoint;
 import math.geometry.model.InterLayerJoint;
 import math.geometry.model.Model;
-import math.geometry.model.ModelBuilder;
 import math.geometry.model.Vertex;
 
 public class Writer {
 
-    public void writeAbaqus(Model model, ModelBuilder builder) {
+    public void writeAbaqus(Model model) {
 
 	PrintWriter printWriter = null;
 

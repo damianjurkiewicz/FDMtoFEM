@@ -1,9 +1,11 @@
-package math.geometry.model;
+package math.geometry.builder;
 
 import equations.Equations;
 import math.gcode.model.GCodeEdge;
 import math.gcode.model.GCodeLayer;
 import math.gcode.model.GCodeModel;
+import math.geometry.model.Model;
+import math.geometry.model.Vertex;
 
 // Code Tells You How, Comments Tell You Why
 public class ModelBuilder {
