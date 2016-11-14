@@ -106,7 +106,7 @@ public class ClassiferBuilder implements Generator {
 
 		    if (vertex.getZ() == nextVertex.getZ()) {
 			double d = Equations.computeInLayerDistance(vertex, nextVertex);
-			if (d <= this.elementSize + 0.01) {
+			if (d <= 0.9) {
 
 			    if (model.findEdge(vertex, nextVertex) != null) {
 				notDuplicate = true;
@@ -123,10 +123,10 @@ public class ClassiferBuilder implements Generator {
 		    }
 		}
 
-		if (vertex.getZ() != nextVertex.getZ()) {
+		if (vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
 
 		    double d = Equations.computeInterLayerDistance(vertex, nextVertex);
-		    if (d <= 1.41) {
+		    if (d <= 1) {
 
 			if (model.findEdge(vertex, nextVertex) != null) {
 			    notDuplicate = true;

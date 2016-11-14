@@ -86,7 +86,7 @@ public class PointerBuilder implements Generator {
 		    if (currentVertex != vertex) {
 			double vertexDistance = Equations.computeInLayerDistance(currentVertex, vertex);
 
-			if (vertexDistance <= this.elementSize + 0.01) {
+			if (vertexDistance <= this.elementSize + 0.1) {
 
 			    if (model.findEdge(currentVertex, vertex) != null) {
 				notDuplicate = true;

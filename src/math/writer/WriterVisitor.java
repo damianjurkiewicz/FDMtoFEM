@@ -7,8 +7,6 @@ import math.geometry.model.Vertex;
 
 public interface WriterVisitor {
 
-    public String generateHeader();
-
     public String generateNodes(Vertex vertex);
 
     public String generateMiddle();

@@ -17,7 +17,7 @@ public class Writer {
 	PrintWriter printWriter = null;
 
 	try {
-	    printWriter = new PrintWriter("FDM_Model.inp", "UTF-8");
+	    printWriter = new PrintWriter("C:\\Users\\Damian\\Desktop\\FDM_Model.inp", "UTF-8");
 	} catch (FileNotFoundException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -26,7 +26,7 @@ public class Writer {
 	    e.printStackTrace();
 	}
 
-	WriterVisitor writer = new WriterVisitorAbaqus();
+	WriterVisitorAbaqus writer = new WriterVisitorAbaqus();
 
 	printWriter.println(writer.generateHeader());
 
@@ -38,19 +38,19 @@ public class Writer {
 
 	printWriter.println(writer.generateMiddle());
 
-	printWriter.println("*Element, type=B31, elset = wydruk");
+	printWriter.println("*Element, type=B31, elset = edge");
 
 	for (Edge abaqusEdge : model.getEdges()) {
 	    printWriter.println(abaqusEdge.receive(writer));
 	}
 
-	printWriter.println("*Element, type=B31, elset = wwarstwie");
+	printWriter.println("*Element, type=B31, elset = inLayerJoint");
 
 	for (InLayerJoint inLayerJoint : model.getInPlaneJoints()) {
 	    printWriter.println(inLayerJoint.receive(writer));
 	}
 
-	printWriter.println("*Element, type=B31, elset = miedzy");
+	printWriter.println("*Element, type=B31, elset = interLayerJoint");
 
 	for (InterLayerJoint interLayerJoint : model.getInterLayerJoints()) {
 	    printWriter.println(interLayerJoint.receive(writer));
