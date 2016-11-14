@@ -72,29 +72,54 @@ public class PointerBuilder implements Generator {
 		}
 	    }
 	}
-
     }
+
+    boolean notDuplicate;
 
     public void generateEdges(GCodeModel gCodeModel, Model model) {
 	for (Vertex currentVertex : model.getVertices()) {
 
 	    for (Vertex vertex : model.getVertices()) {
-		if (currentVertex.getZ() == vertex.getZ() || currentVertex.getZ() == vertex.getZ() + 1) {
+		notDuplicate = false;
 
+		if (currentVertex.getZ() == vertex.getZ()) {
 		    if (currentVertex != vertex) {
-			double vertexDistance = Equations.computeVertexDistance(currentVertex, vertex);
+			double vertexDistance = Equations.computeInLayerDistance(currentVertex, vertex);
 
 			if (vertexDistance <= this.elementSize + 0.01) {
 
 			    if (model.findEdge(currentVertex, vertex) != null) {
-				break;
+				notDuplicate = true;
 			    }
 
 			    if (model.findEdge(vertex, currentVertex) != null) {
-				break;
+				notDuplicate = true;
 			    }
-			    model.addEdge(elementId++, vertex, currentVertex);
 
+			    if (notDuplicate = true) {
+				model.addEdge(elementId++, vertex, currentVertex);
+			    }
+			}
+		    }
+		}
+
+		if (currentVertex.getZ() != vertex.getZ()) {
+		    if (currentVertex != vertex) {
+			double vertexDistance = Equations.computeInterLayerDistance(currentVertex, vertex);
+
+			if (vertexDistance <= 1.01) {
+
+			    if (model.findEdge(currentVertex, vertex) != null) {
+				notDuplicate = true;
+			    }
+
+			    if (model.findEdge(vertex, currentVertex) != null) {
+				notDuplicate = true;
+			    }
+
+			    if (notDuplicate = true) {
+				model.addInterLayerJoint(elementId++, vertex, currentVertex);
+			    }
 			}
 		    }
 		}

@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import math.geometry.model.Edge;
-import math.geometry.model.InPlaneJoint;
+import math.geometry.model.InLayerJoint;
 import math.geometry.model.InterLayerJoint;
 import math.geometry.model.Model;
 import math.geometry.model.Vertex;
@@ -46,8 +46,8 @@ public class Writer {
 
 	printWriter.println("*Element, type=B31, elset = wwarstwie");
 
-	for (InPlaneJoint inPlaneJoint : model.getInPlaneJoints()) {
-	    printWriter.println(inPlaneJoint.receive(writer));
+	for (InLayerJoint inLayerJoint : model.getInPlaneJoints()) {
+	    printWriter.println(inLayerJoint.receive(writer));
 	}
 
 	printWriter.println("*Element, type=B31, elset = miedzy");

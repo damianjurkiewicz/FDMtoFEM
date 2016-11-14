@@ -99,7 +99,7 @@ public class ModelBuilder {
 
 		    if (currentVertex != vertex) {
 			// metoda w abaqus
-			double vertexDistance = Equations.computeVertexDistance(currentVertex, vertex);
+			double vertexDistance = Equations.computeInLayerDistance(currentVertex, vertex);
 
 			// if (currentAbaqusVertex.getDistanceTo(abaqusVertex)
 			// <=
@@ -201,12 +201,12 @@ public class ModelBuilder {
 		if (vertex.getGCodeEdge() != nextVertex.getGCodeEdge()) {
 
 		    if (vertex.getZ() == nextVertex.getZ() || vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
-			double d = Equations.computeVertexDistance(vertex, nextVertex);
+			double d = Equations.computeInLayerDistance(vertex, nextVertex);
 			if (d <= 1) {
-			    model.addInPlaneJoint(elementId++, vertex, nextVertex);
+			    model.addInLayerJoint(elementId++, vertex, nextVertex);
 			}
 			if (vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
-			    d = Equations.computeLayerDistance(vertex, nextVertex);
+			    d = Equations.computeInterLayerDistance(vertex, nextVertex);
 			    if (d <= 1) {
 				model.addInterLayerJoint(elementId++, vertex, nextVertex);
 			    }

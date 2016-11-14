@@ -74,19 +74,17 @@ public class ClassiferBuilder implements Generator {
 		    leftoverX = Equations.computeLeftover(edgeLengthX, incrementX, numberOfWholeSegments);
 		    leftoverY = Equations.computeLeftover(edgeLengthY, incrementY, numberOfWholeSegments);
 
-		    double incrX = incrementX + (leftoverX / numberOfWholeSegments);
-		    double incrY = incrementY + (leftoverY / numberOfWholeSegments);
-
-		    nextX = x1 + incrX;
-		    nextY = y1 + incrY;
+		    nextX = x1 + leftoverX / 2;
+		    nextY = y1 + leftoverY / 2;
 
 		    vertex1 = model.addVertex(nodeId++, x1, y1, z, gCodeEdge);
 		    vertex2 = model.addVertex(nodeId++, nextX, nextY, z, gCodeEdge);
 		    model.addEdge(elementId++, vertex1, vertex2);
 
-		    for (int k = 0; k < numberOfWholeSegments - 2; k++) {
+		    for (int k = 0; k < numberOfWholeSegments; k++) {
 			vertex1 = model.addVertex(nodeId++, nextX, nextY, z, gCodeEdge);
-			vertex2 = model.addVertex(nodeId++, nextX = nextX + incrX, nextY = nextY + incrY, z, gCodeEdge);
+			vertex2 = model.addVertex(nodeId++, nextX = nextX + incrementX, nextY = nextY + incrementY, z,
+				gCodeEdge);
 			model.addEdge(elementId++, vertex1, vertex2);
 		    }
 
@@ -97,28 +95,55 @@ public class ClassiferBuilder implements Generator {
 	}
     }
 
+    boolean notDuplicate;
+
     public void generateEdges(GCodeModel gCodeModel, Model model) {
 	for (Vertex vertex : model.getVertices()) {
-
+	    notDuplicate = false;
 	    for (Vertex nextVertex : model.getVertices()) {
 
 		if (vertex.getGCodeEdge() != nextVertex.getGCodeEdge()) {
 
 		    if (vertex.getZ() == nextVertex.getZ()) {
-			double d = Equations.computeVertexDistance(vertex, nextVertex);
-			if (d <= 1) {
-			    model.addInPlaneJoint(elementId++, vertex, nextVertex);
-			}
-			if (vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
-			    d = Equations.computeLayerDistance(vertex, nextVertex);
-			    if (d <= 1) {
-				model.addInterLayerJoint(elementId++, vertex, nextVertex);
+			double d = Equations.computeInLayerDistance(vertex, nextVertex);
+			if (d <= this.elementSize + 0.01) {
+
+			    if (model.findEdge(vertex, nextVertex) != null) {
+				notDuplicate = true;
+			    }
+
+			    if (model.findEdge(nextVertex, vertex) != null) {
+				notDuplicate = true;
+			    }
+
+			    if (notDuplicate = true) {
+				model.addInLayerJoint(elementId++, vertex, nextVertex);
 			    }
 			}
 		    }
 		}
+
+		if (vertex.getZ() != nextVertex.getZ()) {
+
+		    double d = Equations.computeInterLayerDistance(vertex, nextVertex);
+		    if (d <= 1.41) {
+
+			if (model.findEdge(vertex, nextVertex) != null) {
+			    notDuplicate = true;
+			}
+
+			if (model.findEdge(nextVertex, vertex) != null) {
+			    notDuplicate = true;
+			}
+
+			if (notDuplicate = true) {
+			    model.addInterLayerJoint(elementId++, vertex, nextVertex);
+			}
+
+		    }
+		}
+
 	    }
 	}
     }
-
 }

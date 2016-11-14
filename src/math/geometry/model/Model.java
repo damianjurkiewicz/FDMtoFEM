@@ -11,14 +11,14 @@ public class Model {
 
     private List<Edge> edges;
 
-    public List<InPlaneJoint> inPlaneJoints;
+    public List<InLayerJoint> inLayerJoints;
 
     public List<InterLayerJoint> interLayerJoints;
 
     public Model() {
 	this.vertices = new ArrayList<Vertex>();
 	this.edges = new ArrayList<Edge>();
-	this.inPlaneJoints = new ArrayList<InPlaneJoint>();
+	this.inLayerJoints = new ArrayList<InLayerJoint>();
 	this.interLayerJoints = new ArrayList<InterLayerJoint>();
     }
 
@@ -38,12 +38,12 @@ public class Model {
 	this.edges = edges;
     }
 
-    public List<InPlaneJoint> getInPlaneJoints() {
-	return inPlaneJoints;
+    public List<InLayerJoint> getInPlaneJoints() {
+	return inLayerJoints;
     }
 
-    public void setInPlaneJoints(List<InPlaneJoint> inPlaneJoints) {
-	this.inPlaneJoints = inPlaneJoints;
+    public void setInPlaneJoints(List<InLayerJoint> inPlaneJoints) {
+	this.inLayerJoints = inPlaneJoints;
     }
 
     public List<InterLayerJoint> getInterLayerJoints() {
@@ -93,14 +93,14 @@ public class Model {
 	return abaqusEdge;
     }
 
-    public InPlaneJoint addInPlaneJoint(int edgeId, Vertex vertex1, Vertex vertex2) {
-	InPlaneJoint inPlaneJoint = new InPlaneJoint(edgeId, vertex1, vertex2);
-	this.inPlaneJoints.add(inPlaneJoint);
+    public InLayerJoint addInLayerJoint(int edgeId, Vertex vertex1, Vertex vertex2) {
+	InLayerJoint inPlaneJoint = new InLayerJoint(edgeId, vertex1, vertex2);
+	this.inLayerJoints.add(inPlaneJoint);
 	return inPlaneJoint;
     }
 
     public void removeInPlaneJoint(Edge edge) {
-	this.inPlaneJoints.remove(edge);
+	this.inLayerJoints.remove(edge);
     }
 
     public InterLayerJoint addInterLayerJoint(int edgeId, Vertex vertex1, Vertex vertex2) {

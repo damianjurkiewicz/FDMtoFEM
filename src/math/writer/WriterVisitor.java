@@ -1,7 +1,7 @@
 package math.writer;
 
 import math.geometry.model.Edge;
-import math.geometry.model.InPlaneJoint;
+import math.geometry.model.InLayerJoint;
 import math.geometry.model.InterLayerJoint;
 import math.geometry.model.Vertex;
 
@@ -13,7 +13,7 @@ public interface WriterVisitor {
 
     public String generateMiddle();
 
-    public String generateInPlaneJoint(InPlaneJoint inPlaneJoint);
+    public String generateInPlaneJoint(InLayerJoint inPlaneJoint);
 
     public String generateInterLayerJoint(InterLayerJoint interLayerJoint);
 

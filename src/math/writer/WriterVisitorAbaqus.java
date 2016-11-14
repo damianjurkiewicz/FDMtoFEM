@@ -1,7 +1,7 @@
 package math.writer;
 
 import math.geometry.model.Edge;
-import math.geometry.model.InPlaneJoint;
+import math.geometry.model.InLayerJoint;
 import math.geometry.model.InterLayerJoint;
 import math.geometry.model.Vertex;
 
@@ -39,7 +39,7 @@ public class WriterVisitorAbaqus implements WriterVisitor {
     }
 
     @Override
-    public String generateInPlaneJoint(InPlaneJoint inPlaneJoint) {
+    public String generateInPlaneJoint(InLayerJoint inPlaneJoint) {
 	int edgeId = inPlaneJoint.getEdgeId();
 	int v1Id = inPlaneJoint.getVertex1().getId();
 	int v2Id = inPlaneJoint.getVertex2().getId();

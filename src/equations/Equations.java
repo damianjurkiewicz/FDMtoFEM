@@ -46,13 +46,13 @@ public class Equations {
 	return edgeLeftover;
     }
 
-    public static double computeVertexDistance(Vertex vertex1, Vertex vertex2) {
+    public static double computeInLayerDistance(Vertex vertex1, Vertex vertex2) {
 	double vertexDistance = Math
 		.sqrt(Math.pow(vertex2.getX() - vertex1.getX(), 2d) + Math.pow(vertex2.getY() - vertex1.getY(), 2d));
 	return vertexDistance;
     }
 
-    public static double computeLayerDistance(Vertex vertex1, Vertex vertex2) {
+    public static double computeInterLayerDistance(Vertex vertex1, Vertex vertex2) {
 	double layerDistance = Math.sqrt(Math.pow(vertex2.getX() - vertex1.getX(), 2d)
 		+ Math.pow(vertex2.getY() - vertex1.getY(), 2d) + Math.pow(vertex2.getZ() - vertex1.getZ(), 2d));
 	return layerDistance;
