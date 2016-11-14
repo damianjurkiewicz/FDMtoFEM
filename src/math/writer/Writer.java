@@ -26,29 +26,37 @@ public class Writer {
 	    e.printStackTrace();
 	}
 
-	WriterVisitorAbaqus abaqusWriter = new WriterVisitorAbaqus();
+	WriterVisitor writer = new WriterVisitorAbaqus();
 
-	printWriter.println(abaqusWriter.generateHeader());
+	printWriter.println(writer.generateHeader());
+
+	printWriter.println("**Wezly");
 
 	for (Vertex abaqusVertex : model.getVertices()) {
-	    printWriter.println(abaqusVertex.receive(abaqusWriter));
+	    printWriter.println(abaqusVertex.receive(writer));
 	}
 
-	printWriter.println(abaqusWriter.generateMiddle());
+	printWriter.println(writer.generateMiddle());
+
+	printWriter.println("*Element, type=B31, elset = wydruk");
 
 	for (Edge abaqusEdge : model.getEdges()) {
-	    printWriter.println(abaqusEdge.receive(abaqusWriter));
+	    printWriter.println(abaqusEdge.receive(writer));
 	}
+
+	printWriter.println("*Element, type=B31, elset = wwarstwie");
 
 	for (InPlaneJoint inPlaneJoint : model.getInPlaneJoints()) {
-	    printWriter.println(inPlaneJoint.receive(abaqusWriter));
+	    printWriter.println(inPlaneJoint.receive(writer));
 	}
+
+	printWriter.println("*Element, type=B31, elset = miedzy");
 
 	for (InterLayerJoint interLayerJoint : model.getInterLayerJoints()) {
-	    printWriter.println(interLayerJoint.receive(abaqusWriter));
+	    printWriter.println(interLayerJoint.receive(writer));
 	}
 
-	printWriter.println(abaqusWriter.generateBottom());
+	printWriter.println(writer.generateBottom());
 
 	printWriter.close();
     }

@@ -5,18 +5,28 @@ import math.gcode.model.GCodeEdge;
 import math.gcode.model.GCodeLayer;
 import math.gcode.model.GCodeModel;
 import math.geometry.model.Model;
+import math.geometry.model.Vertex;
 
-public class CloudVertices implements VerticesGenerator {
-    int nodeId = 1;
+public class PointerBuilder implements Generator {
+
     int elementId = 1;
     private double elementSize;
 
-    public CloudVertices(double elementSize) {
+    int nodeId = 1;
+
+    public PointerBuilder(double elementSize) {
 	super();
 	this.elementSize = elementSize;
     }
 
     @Override
+    public Model build(GCodeModel gCodeModel) {
+	Model model = new Model();
+	generateVertices(gCodeModel, model);
+	generateEdges(gCodeModel, model);
+	return model;
+    }
+
     public void generateVertices(GCodeModel gCodeModel, Model model) {
 	double x1, y1, x2, y2, nextX, nextY, z;
 	double incrementX, incrementY;
@@ -64,4 +74,32 @@ public class CloudVertices implements VerticesGenerator {
 	}
 
     }
+
+    public void generateEdges(GCodeModel gCodeModel, Model model) {
+	for (Vertex currentVertex : model.getVertices()) {
+
+	    for (Vertex vertex : model.getVertices()) {
+		if (currentVertex.getZ() == vertex.getZ() || currentVertex.getZ() == vertex.getZ() + 1) {
+
+		    if (currentVertex != vertex) {
+			double vertexDistance = Equations.computeVertexDistance(currentVertex, vertex);
+
+			if (vertexDistance <= this.elementSize + 0.01) {
+
+			    if (model.findEdge(currentVertex, vertex) != null) {
+				break;
+			    }
+
+			    if (model.findEdge(vertex, currentVertex) != null) {
+				break;
+			    }
+			    model.addEdge(elementId++, vertex, currentVertex);
+
+			}
+		    }
+		}
+	    }
+	}
+    }
+
 }

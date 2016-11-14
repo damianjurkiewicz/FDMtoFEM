@@ -7,19 +7,28 @@ import math.gcode.model.GCodeModel;
 import math.geometry.model.Model;
 import math.geometry.model.Vertex;
 
-public class BasedVertices implements VerticesGenerator {
+public class ClassiferBuilder implements Generator {
 
-    int nodeId = 1;
-    int elementId = 1;
+    @Override
+    public Model build(GCodeModel gCodeModel) {
+	Model model = new Model();
+	generateVertices(gCodeModel, model);
+	generateEdges(gCodeModel, model);
+	return model;
+    }
+
+    private int nodeId = 1;
     private double elementSize;
 
-    public BasedVertices(double elementSize) {
+    int elementId = 1;
+
+    public ClassiferBuilder(double elementSize) {
 	super();
 	this.elementSize = elementSize;
     }
 
-    @Override
     public void generateVertices(GCodeModel gCodeModel, Model model) {
+
 	double x1, y1, x2, y2, nextX = 0, nextY = 0, z;
 	double incrementX, incrementY;
 	double leftoverX, leftoverY;
@@ -86,7 +95,30 @@ public class BasedVertices implements VerticesGenerator {
 		}
 	    }
 	}
+    }
 
+    public void generateEdges(GCodeModel gCodeModel, Model model) {
+	for (Vertex vertex : model.getVertices()) {
+
+	    for (Vertex nextVertex : model.getVertices()) {
+
+		if (vertex.getGCodeEdge() != nextVertex.getGCodeEdge()) {
+
+		    if (vertex.getZ() == nextVertex.getZ()) {
+			double d = Equations.computeVertexDistance(vertex, nextVertex);
+			if (d <= 1) {
+			    model.addInPlaneJoint(elementId++, vertex, nextVertex);
+			}
+			if (vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
+			    d = Equations.computeLayerDistance(vertex, nextVertex);
+			    if (d <= 1) {
+				model.addInterLayerJoint(elementId++, vertex, nextVertex);
+			    }
+			}
+		    }
+		}
+	    }
+	}
     }
 
 }
