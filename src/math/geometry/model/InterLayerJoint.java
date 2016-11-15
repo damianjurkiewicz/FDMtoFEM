@@ -1,15 +1,15 @@
 package math.geometry.model;
 
-import math.writer.WriterVisitor;
+import math.writer.WriteModelElements;
 
-public class InterLayerJoint extends Edge implements GeometryElements {
+public class InterLayerJoint extends Edge implements ModelElements {
 
     public InterLayerJoint(int edgeId, Vertex vertex1, Vertex vertex2) {
 	super(edgeId, vertex1, vertex2);
     }
 
     @Override
-    public String receive(WriterVisitor writer) {
+    public String receive(WriteModelElements writer) {
 	return writer.generateInterLayerJoint(this);
     }
 

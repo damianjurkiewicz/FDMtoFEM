@@ -7,15 +7,13 @@ import math.gcode.model.GCodeModel;
 import math.geometry.model.Model;
 import math.geometry.model.Vertex;
 
-public class PointerBuilder implements Generator {
+public class PointerGenerator implements Generator {
 
+    int nodeId = 1;
     int elementId = 1;
     private double elementSize;
 
-    int nodeId = 1;
-
-    public PointerBuilder(double elementSize) {
-	super();
+    public PointerGenerator(double elementSize) {
 	this.elementSize = elementSize;
     }
 
@@ -74,13 +72,13 @@ public class PointerBuilder implements Generator {
 	}
     }
 
-    boolean notDuplicate;
+    boolean isNotDuplicate;
 
     public void generateEdges(GCodeModel gCodeModel, Model model) {
 	for (Vertex currentVertex : model.getVertices()) {
 
 	    for (Vertex vertex : model.getVertices()) {
-		notDuplicate = false;
+		isNotDuplicate = false;
 
 		if (currentVertex.getZ() == vertex.getZ()) {
 		    if (currentVertex != vertex) {
@@ -89,14 +87,14 @@ public class PointerBuilder implements Generator {
 			if (vertexDistance <= this.elementSize + 0.1) {
 
 			    if (model.findEdge(currentVertex, vertex) != null) {
-				notDuplicate = true;
+				isNotDuplicate = true;
 			    }
 
 			    if (model.findEdge(vertex, currentVertex) != null) {
-				notDuplicate = true;
+				isNotDuplicate = true;
 			    }
 
-			    if (notDuplicate = true) {
+			    if (isNotDuplicate = true) {
 				model.addEdge(elementId++, vertex, currentVertex);
 			    }
 			}
@@ -110,14 +108,14 @@ public class PointerBuilder implements Generator {
 			if (vertexDistance <= 1.01) {
 
 			    if (model.findEdge(currentVertex, vertex) != null) {
-				notDuplicate = true;
+				isNotDuplicate = true;
 			    }
 
 			    if (model.findEdge(vertex, currentVertex) != null) {
-				notDuplicate = true;
+				isNotDuplicate = true;
 			    }
 
-			    if (notDuplicate = true) {
+			    if (isNotDuplicate = true) {
 				model.addInterLayerJoint(elementId++, vertex, currentVertex);
 			    }
 			}

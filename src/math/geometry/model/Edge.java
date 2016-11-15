@@ -1,8 +1,8 @@
 package math.geometry.model;
 
-import math.writer.WriterVisitor;
+import math.writer.WriteModelElements;
 
-public class Edge implements GeometryElements {
+public class Edge implements ModelElements {
 
     private Vertex vertex1;
     private Vertex vertex2;
@@ -41,7 +41,7 @@ public class Edge implements GeometryElements {
     }
 
     @Override
-    public String receive(WriterVisitor writer) {
+    public String receive(WriteModelElements writer) {
 	return writer.generateElements(this);
     }
 

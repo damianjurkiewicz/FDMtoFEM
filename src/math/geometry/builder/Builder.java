@@ -8,32 +8,17 @@ public class Builder {
     private double elementSize;
 
     public Builder(double elementSize) {
-	super();
 	this.elementSize = elementSize;
     }
 
-    public double getElementSize() {
-	return elementSize;
-    }
-
-    public void setElementSize(double elementSize) {
-	this.elementSize = elementSize;
-    }
-
-    public Model buildClassifer(GCodeModel gCodeModel) {
-	Model model = new Model();
-	ClassiferBuilder e = new ClassiferBuilder(0.789);
-	e.generateVertices(gCodeModel, model);
-	e.generateEdges(gCodeModel, model);
-	return model;
+    public Model buildClassifier(GCodeModel gCodeModel) {
+	ClassifierGenerator classifier = new ClassifierGenerator(this.elementSize);
+	return classifier.build(gCodeModel);
     }
 
     public Model buildPointer(GCodeModel gCodeModel) {
-	Model model = new Model();
-	PointerBuilder e = new PointerBuilder(0.789);
-	e.generateVertices(gCodeModel, model);
-	e.generateEdges(gCodeModel, model);
-	return model;
+	PointerGenerator pointer = new PointerGenerator(this.elementSize);
+	return pointer.build(gCodeModel);
     }
 
 }

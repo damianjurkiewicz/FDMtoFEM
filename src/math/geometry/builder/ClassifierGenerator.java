@@ -7,7 +7,15 @@ import math.gcode.model.GCodeModel;
 import math.geometry.model.Model;
 import math.geometry.model.Vertex;
 
-public class ClassiferBuilder implements Generator {
+public class ClassifierGenerator implements Generator {
+
+    int elementId = 1;
+    private int nodeId = 1;
+    private double elementSize;
+
+    public ClassifierGenerator(double elementSize) {
+	this.elementSize = elementSize;
+    }
 
     @Override
     public Model build(GCodeModel gCodeModel) {
@@ -17,17 +25,7 @@ public class ClassiferBuilder implements Generator {
 	return model;
     }
 
-    private int nodeId = 1;
-    private double elementSize;
-
-    int elementId = 1;
-
-    public ClassiferBuilder(double elementSize) {
-	super();
-	this.elementSize = elementSize;
-    }
-
-    public void generateVertices(GCodeModel gCodeModel, Model model) {
+    private void generateVertices(GCodeModel gCodeModel, Model model) {
 
 	double x1, y1, x2, y2, nextX = 0, nextY = 0, z;
 	double incrementX, incrementY;
@@ -95,11 +93,11 @@ public class ClassiferBuilder implements Generator {
 	}
     }
 
-    boolean notDuplicate;
+    boolean isNotDuplicate;
 
-    public void generateEdges(GCodeModel gCodeModel, Model model) {
+    private void generateEdges(GCodeModel gCodeModel, Model model) {
 	for (Vertex vertex : model.getVertices()) {
-	    notDuplicate = false;
+	    isNotDuplicate = false;
 	    for (Vertex nextVertex : model.getVertices()) {
 
 		if (vertex.getGCodeEdge() != nextVertex.getGCodeEdge()) {
@@ -109,14 +107,14 @@ public class ClassiferBuilder implements Generator {
 			if (d <= 0.9) {
 
 			    if (model.findEdge(vertex, nextVertex) != null) {
-				notDuplicate = true;
+				isNotDuplicate = true;
 			    }
 
 			    if (model.findEdge(nextVertex, vertex) != null) {
-				notDuplicate = true;
+				isNotDuplicate = true;
 			    }
 
-			    if (notDuplicate = true) {
+			    if (isNotDuplicate = true) {
 				model.addInLayerJoint(elementId++, vertex, nextVertex);
 			    }
 			}
@@ -129,14 +127,14 @@ public class ClassiferBuilder implements Generator {
 		    if (d <= 1) {
 
 			if (model.findEdge(vertex, nextVertex) != null) {
-			    notDuplicate = true;
+			    isNotDuplicate = true;
 			}
 
 			if (model.findEdge(nextVertex, vertex) != null) {
-			    notDuplicate = true;
+			    isNotDuplicate = true;
 			}
 
-			if (notDuplicate = true) {
+			if (isNotDuplicate = true) {
 			    model.addInterLayerJoint(elementId++, vertex, nextVertex);
 			}
 

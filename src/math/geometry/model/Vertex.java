@@ -1,9 +1,9 @@
 package math.geometry.model;
 
 import math.gcode.model.GCodeEdge;
-import math.writer.WriterVisitor;
+import math.writer.WriteModelElements;
 
-public class Vertex implements GeometryElements {
+public class Vertex implements ModelElements {
 
     private double x;
     private double y;
@@ -64,7 +64,7 @@ public class Vertex implements GeometryElements {
     }
 
     @Override
-    public String receive(WriterVisitor writer) {
+    public String receive(WriteModelElements writer) {
 	return writer.generateNodes(this);
     }
 
