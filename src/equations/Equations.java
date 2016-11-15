@@ -1,6 +1,6 @@
 package equations;
 
-import math.geometry.model.Vertex;
+import geometry.model.Vertex;
 
 public class Equations {
 
