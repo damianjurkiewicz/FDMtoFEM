@@ -10,7 +10,7 @@ public class InterLayerJoint extends Edge implements ModelElements {
 
     @Override
     public String receive(WriteModelElements writer) {
-	return writer.generateInterLayerJoint(this);
+	return writer.formatInterLayerJoint(this);
     }
 
 }

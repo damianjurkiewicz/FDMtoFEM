@@ -80,23 +80,10 @@ public class Model {
 	this.edges.remove(edge);
     }
 
-    public Edge findEdge(Vertex vertex1, Vertex vertex2) {
-	Edge abaqusEdge = null;
-
-	for (Edge currentAbaqusEdge : this.edges) {
-
-	    if (currentAbaqusEdge.getVertex1() == vertex1 && currentAbaqusEdge.getVertex2() == vertex2) {
-		abaqusEdge = currentAbaqusEdge;
-	    }
-	}
-
-	return abaqusEdge;
-    }
-
     public InLayerJoint addInLayerJoint(int edgeId, Vertex vertex1, Vertex vertex2) {
-	InLayerJoint inPlaneJoint = new InLayerJoint(edgeId, vertex1, vertex2);
-	this.inLayerJoints.add(inPlaneJoint);
-	return inPlaneJoint;
+	InLayerJoint inLayerJoint = new InLayerJoint(edgeId, vertex1, vertex2);
+	this.inLayerJoints.add(inLayerJoint);
+	return inLayerJoint;
     }
 
     public void removeInPlaneJoint(Edge edge) {
@@ -111,6 +98,19 @@ public class Model {
 
     public void removeInterLayerJoint(Edge edge) {
 	this.interLayerJoints.remove(edge);
+    }
+
+    public Edge findEdge(Vertex vertex1, Vertex vertex2) {
+	Edge currentEdge = null;
+
+	for (Edge edge : this.edges) {
+
+	    if (edge.getVertex1() == vertex1 && edge.getVertex2() == vertex2) {
+		currentEdge = edge;
+	    }
+	}
+
+	return currentEdge;
     }
 
 }

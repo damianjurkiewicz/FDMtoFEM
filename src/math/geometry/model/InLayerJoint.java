@@ -10,7 +10,7 @@ public class InLayerJoint extends Edge implements ModelElements {
 
     @Override
     public String receive(WriteModelElements writer) {
-	return writer.generateInPlaneJoint(this);
+	return writer.formatInPlaneJoint(this);
     }
 
 }

@@ -4,6 +4,6 @@ import math.writer.WriteModelElements;
 
 public interface ModelElements {
 
-    public String receive(WriteModelElements writer);
+    public String receive(WriteModelElements modelElements);
 
 }

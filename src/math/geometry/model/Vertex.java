@@ -65,7 +65,7 @@ public class Vertex implements ModelElements {
 
     @Override
     public String receive(WriteModelElements writer) {
-	return writer.generateNodes(this);
+	return writer.formatNodes(this);
     }
 
 }

@@ -7,12 +7,12 @@ import math.geometry.model.Vertex;
 
 public interface WriteModelElements {
 
-    public String generateNodes(Vertex vertex);
+    public String formatNodes(Vertex vertex);
 
-    public String generateInPlaneJoint(InLayerJoint inPlaneJoint);
+    public String formatInPlaneJoint(InLayerJoint inPlaneJoint);
 
-    public String generateInterLayerJoint(InterLayerJoint interLayerJoint);
+    public String formatInterLayerJoint(InterLayerJoint interLayerJoint);
 
-    public String generateElements(Edge edges);
+    public String formatElements(Edge edges);
 
 }
