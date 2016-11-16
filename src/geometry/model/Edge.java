@@ -40,8 +40,8 @@ public class Edge implements ModelElements {
     }
 
     @Override
-    public String receive(FormatModelElements writer) {
-	return writer.formatElements(this);
+    public String receive(FormatModelElements modelElement) {
+	return modelElement.formatEdges(this);
     }
 
 }

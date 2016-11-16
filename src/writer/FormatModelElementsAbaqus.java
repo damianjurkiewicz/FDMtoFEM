@@ -8,7 +8,7 @@ import geometry.model.Vertex;
 public class FormatModelElementsAbaqus implements FormatModelElements {
 
     @Override
-    public String formatNodes(Vertex vertex) {
+    public String formatVertices(Vertex vertex) {
 	String vertices = "";
 	double x = vertex.getX();
 	double y = vertex.getY();
@@ -18,7 +18,7 @@ public class FormatModelElementsAbaqus implements FormatModelElements {
     }
 
     @Override
-    public String formatElements(Edge edge) {
+    public String formatEdges(Edge edge) {
 	int edgeId = edge.getEdgeId();
 	int v1Id = edge.getVertex1().getId();
 	int v2Id = edge.getVertex2().getId();

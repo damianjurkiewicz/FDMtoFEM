@@ -86,8 +86,8 @@ public class Model {
 	return inLayerJoint;
     }
 
-    public void removeInPlaneJoint(Edge edge) {
-	this.inLayerJoints.remove(edge);
+    public void removeInPlaneJoint(InLayerJoint inLayerJoint) {
+	this.inLayerJoints.remove(inLayerJoint);
     }
 
     public InterLayerJoint addInterLayerJoint(int edgeId, Vertex vertex1, Vertex vertex2) {
@@ -96,8 +96,8 @@ public class Model {
 	return interLayerJoint;
     }
 
-    public void removeInterLayerJoint(Edge edge) {
-	this.interLayerJoints.remove(edge);
+    public void removeInterLayerJoint(InterLayerJoint interLayerJoint) {
+	this.interLayerJoints.remove(interLayerJoint);
     }
 
     public Edge findEdge(Vertex vertex1, Vertex vertex2) {

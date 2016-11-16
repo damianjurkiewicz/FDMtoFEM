@@ -6,7 +6,6 @@ import geometry.model.Model;
 public class Builder {
 
     private double elementSize;
-
     private double inLayerJoinDistance;
     private double interLayerJoinDistance;
 
@@ -23,7 +22,8 @@ public class Builder {
     }
 
     public Model buildPointer(GCodeModel gCodeModel) {
-	PointerGenerator pointer = new PointerGenerator(this.elementSize);
+	PointerGenerator pointer = new PointerGenerator(this.elementSize, this.inLayerJoinDistance,
+			this.interLayerJoinDistance);
 	return pointer.build(gCodeModel);
     }
 

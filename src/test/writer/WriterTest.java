@@ -23,7 +23,7 @@ public class WriterTest {
 
 	GCodeModelBuilder gCodeBuilder = new GCodeModelBuilder();
 	GCodeReader reader = new GCodeReader();
-	GCodeFile file = reader.read(readDirectory);
+	GCodeFile file = reader.readFile(readDirectory);
 	GCodeModel gCodeModel = gCodeBuilder.build(file);
 	Builder builder = new Builder(elementSize, inLayerJoinDistance, interLayerJoinDistance);
 	Model model = builder.buildClassifier(gCodeModel);

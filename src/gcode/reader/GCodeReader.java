@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class GCodeReader {
 
-    public GCodeFile read(String filePath) {
+    public GCodeFile readFile(String filePath) {
 
 	GCodeFile file = new GCodeFile();
 	String row;

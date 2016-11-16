@@ -5,14 +5,14 @@ import writer.FormatModelElements;
 
 public class Vertex implements ModelElements {
 
+	private int vertexId;
     private double x;
     private double y;
     private double z;
-    private int id;
     private GCodeEdge gCodeEdge;
 
     public Vertex(int id, double x, double y, double z) {
-	this.id = id;
+	this.vertexId = id;
 	this.x = x;
 	this.y = y;
 	this.z = z;
@@ -48,11 +48,11 @@ public class Vertex implements ModelElements {
     }
 
     public int getId() {
-	return id;
+	return vertexId;
     }
 
     public void setId(int id) {
-	this.id = id;
+	this.vertexId = id;
     }
 
     public GCodeEdge getGCodeEdge() {
@@ -64,8 +64,8 @@ public class Vertex implements ModelElements {
     }
 
     @Override
-    public String receive(FormatModelElements writer) {
-	return writer.formatNodes(this);
+    public String receive(FormatModelElements modelElement) {
+	return modelElement.formatVertices(this);
     }
 
 }

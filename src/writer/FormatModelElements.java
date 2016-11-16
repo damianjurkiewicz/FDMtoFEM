@@ -7,12 +7,13 @@ import geometry.model.Vertex;
 
 public interface FormatModelElements {
 
-    public String formatNodes(Vertex vertex);
+    public String formatVertices(Vertex vertex);
+
+    public String formatEdges(Edge edges);
 
     public String formatInPlaneJoint(InLayerJoint inPlaneJoint);
 
     public String formatInterLayerJoint(InterLayerJoint interLayerJoint);
 
-    public String formatElements(Edge edges);
 
 }
