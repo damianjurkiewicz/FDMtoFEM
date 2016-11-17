@@ -97,50 +97,25 @@ public class ClassifierGenerator implements Generator {
 		}
 	}
 
-	boolean isNotDuplicate;
-
 	private void generateJoints(GCodeModel gCodeModel, Model model) {
+		
+		double inLayerDistance;
+		double interLayerDistance;
+		
 		for (Vertex vertex : model.getVertices()) {
-			isNotDuplicate = false;
 			for (Vertex nextVertex : model.getVertices()) {
 
-				if (vertex.getGCodeEdge() != nextVertex.getGCodeEdge()) {
-
-					if (vertex.getZ() == nextVertex.getZ()) {
-						double d = Equations.computeInLayerDistance(vertex, nextVertex);
-						if (d <= this.inLayerJoinDistance) {
-
-							if (model.findEdge(vertex, nextVertex) != null) {
-								isNotDuplicate = true;
-							}
-
-							if (model.findEdge(nextVertex, vertex) != null) {
-								isNotDuplicate = true;
-							}
-
-							if (isNotDuplicate = true) {
-								model.addInLayerJoint(elementId++, vertex, nextVertex);
-							}
-						}
+				if (vertex.getZ() == nextVertex.getZ()) {
+					inLayerDistance = Equations.computeInLayerDistance(vertex, nextVertex);
+					if (inLayerDistance <= this.inLayerJoinDistance) {
+						model.addInLayerJoint(elementId++, vertex, nextVertex);
 					}
 				}
 
-				if (vertex.getZ() == nextVertex.getZ() + nextVertex.getZ()) {
-
-					double d = Equations.computeInterLayerDistance(vertex, nextVertex);
-					if (d <= this.interLayerJoinDistance) {
-
-						if (model.findEdge(vertex, nextVertex) != null) {
-							isNotDuplicate = true;
-						}
-
-						if (model.findEdge(nextVertex, vertex) != null) {
-							isNotDuplicate = true;
-						}
-
-						if (isNotDuplicate = true) {
-							model.addInterLayerJoint(elementId++, vertex, nextVertex);
-						}
+				if (vertex.getZ() != nextVertex.getZ()) {
+					interLayerDistance = Equations.computeInterLayerDistance(vertex, nextVertex);
+					if (interLayerDistance <= this.interLayerJoinDistance) {
+						model.addInterLayerJoint(elementId++, vertex, nextVertex);
 					}
 				}
 			}

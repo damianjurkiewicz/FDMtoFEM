@@ -18,8 +18,8 @@ public class WriterTest {
 	Double elementSize = 0.789;
 	Double inLayerJoinDistance = 0.8;
 	Double interLayerJoinDistance = 0.8;
-	String readDirectory = "C:\\Users\\Damian\\Desktop\\aba.txt";
-	String writeDirectory = "C:\\Users\\Damian\\Desktop\\FDM_Model.inp";
+	String readDirectory = "C:\\Users\\maddj\\Desktop\\aba.txt";
+	String writeDirectory = "C:\\Users\\maddj\\Desktop\\FDM_Model.inp";
 
 	GCodeModelBuilder gCodeBuilder = new GCodeModelBuilder();
 	GCodeReader reader = new GCodeReader();
