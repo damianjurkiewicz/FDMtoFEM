@@ -6,55 +6,50 @@ public class GCodeModelBuilder {
 
     public GCodeModel build(GCodeFile gCodeFile) {
 
-	Double x1D = 0d;
-	Double y1D = 0d;
-	Double x2D = 0d;
-	Double y2D = 0d;
-	Double zD = 0d;
-	GCodeVertex vertex = null;
+	GCodeVertex vertex1 = null;
 	GCodeVertex vertex2 = null;
-	GCodeLayer layer = null;
-	GCodeEdge edge = null;
-	GCodeModel model = new GCodeModel();
+	GCodeLayer gCodeLayer = null;
+	GCodeModel gCodeModel = new GCodeModel();
 
-	for (int i = 0; i < 13; i++) {
+	for (int i = 0; i < gCodeFile.getRows().size(); i++) {
 
-	    String z = gCodeFile.getRows().get(i).getZ();
-
-	    if (z.contains(".")) {
-		zD = Double.parseDouble(gCodeFile.getRows().get(i).getZ());
-		layer = new GCodeLayer(model, zD);
-		model.getLayers().add(layer);
-
+	    if (gCodeFile.getRows().get(i).getZ().contains(".")) {
+		Double z = Double.parseDouble(gCodeFile.getRows().get(i).getZ());
+		gCodeLayer = gCodeModel.addLayer(z);
 	    }
 
-	    // x nie pusty, y nie pusty, z pusty, e nie pusty, poprzedni Z
-	    // pusty
+	    // X niepusty, Y niepusty, Z pusty, E niepusty,
+
 	    if (!gCodeFile.getRows().get(i).getX().isEmpty() && !gCodeFile.getRows().get(i).getY().isEmpty()
-		    && gCodeFile.getRows().get(i).getZ().isEmpty() && !gCodeFile.getRows().get(i).getE().isEmpty()
-		    && gCodeFile.getRows().get(i - 1).getZ().isEmpty()
-		    && !gCodeFile.getRows().get(i - 1).getX().isEmpty()) {
+		    && !gCodeFile.getRows().get(i).getE().isEmpty()) {
+		// poprzedni linijka wstecz X niepusty, weŸ wartoœci z linijki
+		// wstecz
+		Double x1 = 0d, x2 = 0d, y1 = 0d, y2 = 0d;
+		x2 = Double.parseDouble(gCodeFile.getRows().get(i).getX());
+		y2 = Double.parseDouble(gCodeFile.getRows().get(i).getY());
 
-		x1D = Double.parseDouble(gCodeFile.getRows().get(i - 1).getX());
-		y1D = Double.parseDouble(gCodeFile.getRows().get(i - 1).getY());
-		x2D = Double.parseDouble(gCodeFile.getRows().get(i).getX());
-		y2D = Double.parseDouble(gCodeFile.getRows().get(i).getY());
+		int k = 0;
+		do {
+		    k++;
 
-		vertex = new GCodeVertex(layer, x1D, y1D);
-		vertex2 = new GCodeVertex(layer, x2D, y2D);
+		    if (!gCodeFile.getRows().get(i - k).getX().isEmpty()) {
+			x1 = Double.parseDouble(gCodeFile.getRows().get(i - k).getX());
+			y1 = Double.parseDouble(gCodeFile.getRows().get(i - k).getY());
+		    }
 
-		layer.getVertices().add(vertex);
-		layer.getVertices().add(vertex2);
+		} while (gCodeFile.getRows().get(i - k).getX().isEmpty());
 
-		edge = new GCodeEdge(layer, vertex, vertex2);
-		layer.getEdges().add(edge);
+		// poprzedni linijka wstecz X pusty, weŸ wartoœci z linijki dwie
+		// linijki wstecz
 
+		vertex1 = gCodeLayer.addVertex(x1, y1);
+		vertex2 = gCodeLayer.addVertex(x2, y2);
+
+		gCodeLayer.addEdge(vertex1, vertex2);
 	    }
-
 	}
 
-	return model;
+	return gCodeModel;
 
     }
-
 }
