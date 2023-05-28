@@ -1,4 +1,4 @@
-package math.gcode;
+package math.gcode.reader;
 
 import java.util.ArrayList;
 import java.util.List;
