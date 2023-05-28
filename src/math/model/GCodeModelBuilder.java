@@ -4,57 +4,71 @@ import math.gcode.GCodeFile;
 
 public class GCodeModelBuilder {
 
-    public GCodeModel build(GCodeFile gCodeFile) {
+	// Metoda majaca za zadanie utworzyc odpowienia strukture, warstw (layer),
+	// odcinkow (edge), punktow (vertex)
+	// Struktura ta odpowiada wyrobowi drukowanemu, skadajacego sie z warstw i
+	// nitek (odcinkow, edge'ow), nitka ma punkt poczatkowy i koncowy, zawarty w
+	// GCodzie
+	public GCodeModel build(GCodeFile gCodeFile) {
 
-	Double x1D = 0d;
-	Double y1D = 0d;
-	Double x2D = 0d;
-	Double y2D = 0d;
-	Double zD = 0d;
-	GCodeVertex vertex = null;
-	GCodeVertex vertex2 = null;
-	GCodeLayer layer = null;
-	GCodeEdge edge = null;
-	GCodeModel model = new GCodeModel();
+		GCodeVertex vertex1 = null;
+		GCodeVertex vertex2 = null;
+		GCodeLayer gCodeLayer = null;
+		GCodeModel gCodeModel = new GCodeModel();
 
-	for (int i = 0; i < 13; i++) {
+		// Przeszukanie calego gCodeFile, linijka po linijce
+		for (int i = 0; i < gCodeFile.getRows().size(); i++) {
 
-	    String z = gCodeFile.getRows().get(i).getZ();
+			// Jesli napotka Z ustawi nowa warstwe, String przy Z (w naszym
+			// przypadku liczba) musi miec kropke, eliminuje to problem
+			// wczytywania wartosci rychow pomocniczych, ktore wedlug pliku
+			// GCode ze Slic3ra nie zawieraja kropki, mozna pomyslec o lepszym
+			// zabezpieczeniu
+			if (gCodeFile.getRows().get(i).getZ().contains(".")) {
+				Double z = Double.parseDouble(gCodeFile.getRows().get(i).getZ());
+				gCodeLayer = gCodeModel.addLayer(z);
+			}
 
-	    if (z.contains(".")) {
-		zD = Double.parseDouble(gCodeFile.getRows().get(i).getZ());
-		layer = new GCodeLayer(model, zD);
-		model.getLayers().add(layer);
+			// Wczytanie linijki w ktorej:
+			// X niepusty, Y niepusty, E niepusty,
+			// Wystepowanie tych wsporzednych gwarantuje, ze nastapil
+			// rzeczywiscie wydruk, a nie ruch pomocniczy
 
-	    }
+			if (!gCodeFile.getRows().get(i).getX().isEmpty() && !gCodeFile.getRows().get(i).getY().isEmpty()
+					&& !gCodeFile.getRows().get(i).getE().isEmpty()) {
 
-	    // x nie pusty, y nie pusty, z pusty, e nie pusty, poprzedni Z
-	    // pusty
-	    if (!gCodeFile.getRows().get(i).getX().isEmpty() && !gCodeFile.getRows().get(i).getY().isEmpty()
-		    && gCodeFile.getRows().get(i).getZ().isEmpty() && !gCodeFile.getRows().get(i).getE().isEmpty()
-		    && gCodeFile.getRows().get(i - 1).getZ().isEmpty()
-		    && !gCodeFile.getRows().get(i - 1).getX().isEmpty()) {
+				// Linijka zawierajaca X, Y, E daje wspolrzedne dla drugiego
+				// vertexa (x2, y2), z tego wzledu, ze przed taka linijka moze
+				// wystpic ruch pomocniczy
+				Double x1 = 0d, x2 = 0d, y1 = 0d, y2 = 0d;
+				x2 = Double.parseDouble(gCodeFile.getRows().get(i).getX());
+				y2 = Double.parseDouble(gCodeFile.getRows().get(i).getY());
 
-		x1D = Double.parseDouble(gCodeFile.getRows().get(i - 1).getX());
-		y1D = Double.parseDouble(gCodeFile.getRows().get(i - 1).getY());
-		x2D = Double.parseDouble(gCodeFile.getRows().get(i).getX());
-		y2D = Double.parseDouble(gCodeFile.getRows().get(i).getY());
+				// Przeszukiwanie wstecz, by znalezc ostatnia linijke ze
+				// wspolrzednymi, ktora byla ruchem pomocniczym, ale to w tym
+				// miejscu rozpoczyna sie wydruk nitki
+				int k = 0;
+				do {
+					k++;
 
-		vertex = new GCodeVertex(layer, x1D, y1D);
-		vertex2 = new GCodeVertex(layer, x2D, y2D);
+					if (!gCodeFile.getRows().get(i - k).getX().isEmpty()) {
+						x1 = Double.parseDouble(gCodeFile.getRows().get(i - k).getX());
+						y1 = Double.parseDouble(gCodeFile.getRows().get(i - k).getY());
+					}
 
-		layer.getVertices().add(vertex);
-		layer.getVertices().add(vertex2);
+				} while (gCodeFile.getRows().get(i - k).getX().isEmpty());
 
-		edge = new GCodeEdge(layer, vertex, vertex2);
-		layer.getEdges().add(edge);
+				// Po znalezieniu wspolrzednych X Y nastepuje utworzenie
+				// vertexow i stworzenia edga z ich wykorzystaniem
+				vertex1 = gCodeLayer.addVertex(x1, y1);
+				vertex2 = gCodeLayer.addVertex(x2, y2);
 
-	    }
+				gCodeLayer.addEdge(vertex1, vertex2);
+
+			}
+		}
+
+		return gCodeModel;
 
 	}
-
-	return model;
-
-    }
-
 }
